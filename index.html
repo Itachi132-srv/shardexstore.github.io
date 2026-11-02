@@ -1,729 +1,735 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#09060d">
-  <meta name="description" content="Shardex Store — The Digital Marketplace for Gamers.">
-  <title>Shardex Store | The Digital Marketplace for Gamers</title>
-  <style>
-    :root {
-      color-scheme: dark;
-      --black: #09060d;
-      --panel: #120c1a;
-      --panel-light: #1b1027;
-      --purple: #a855f7;
-      --purple-bright: #c084fc;
-      --purple-dark: #6b21a8;
-      --white: #f7f1ff;
-      --muted: #b8aabe;
-      --line: #3b2450;
-      --danger: #ffb4c2;
-      font-family: Arial, Helvetica, sans-serif;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shardex Store</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --bg: #08080d;
+    --card: #12121b;
+    --purple: #8b5cf6;
+    --light-purple: #b69aff;
+    --text: #f5f3ff;
+    --muted: #9692a8;
+    --border: #292536;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 8%;
+    border-bottom: 1px solid var(--border);
+    background: #0c0b12;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 23px;
+    font-weight: 800;
+    color: var(--light-purple);
+}
+
+.logo span {
+    color: white;
+}
+
+nav {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+nav a {
+    color: #c5bfd8;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: var(--light-purple);
+}
+
+.cart-btn {
+    background: var(--purple);
+    color: white;
+    border: none;
+    padding: 10px 17px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.hero {
+    text-align: center;
+    padding: 90px 20px 65px;
+    background:
+        radial-gradient(ellipse at top, #28164d 0%, transparent 60%);
+}
+
+.hero h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(35px, 6vw, 65px);
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.hero h1 span {
+    color: var(--light-purple);
+}
+
+.hero p {
+    color: var(--muted);
+    max-width: 600px;
+    margin: auto;
+    font-size: 15px;
+}
+
+.hero-btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 13px 28px;
+    background: var(--purple);
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.hero-btn:hover {
+    background: #7543e8;
+    transform: translateY(-2px);
+}
+
+.section {
+    padding: 45px 8%;
+}
+
+.section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 27px;
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.category-btn {
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: #c8c1d9;
+    padding: 10px 20px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.category-btn.active,
+.category-btn:hover {
+    background: var(--purple);
+    color: white;
+    border-color: var(--purple);
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+}
+
+.product-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    transition: 0.3s;
+    overflow: hidden;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--purple);
+    box-shadow: 0 10px 35px #8b5cf61c;
+}
+
+.product-image {
+    width: 100%;
+    height: 160px;
+    object-fit: contain;
+    margin-bottom: 18px;
+    border-radius: 10px;
+}
+
+.product-card h3 {
+    font-size: 17px;
+    margin-bottom: 7px;
+}
+
+.product-card p {
+    color: var(--muted);
+    font-size: 13px;
+    min-height: 40px;
+}
+
+.price {
+    margin-top: 18px;
+    margin-bottom: 15px;
+}
+
+.price .pkr {
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--light-purple);
+}
+
+.price .usd {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.buy-btn {
+    width: 100%;
+    background: #8b5cf6;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 9px;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.buy-btn:hover {
+    background: #7042db;
+}
+
+.coming-soon {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.cart-panel {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #000000b8;
+    z-index: 200;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.cart-box {
+    width: 100%;
+    max-width: 450px;
+    background: #12121b;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 25px;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+}
+
+.remove-btn {
+    background: transparent;
+    color: #ff7777;
+    border: none;
+    cursor: pointer;
+}
+
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.checkout-btn {
+    width: 100%;
+    background: #25d366;
+    color: #07150b;
+    border: none;
+    padding: 13px;
+    border-radius: 9px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.empty-cart {
+    color: var(--muted);
+    text-align: center;
+    padding: 20px 0;
+}
+
+footer {
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: 40px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 13px;
+}
+
+footer span {
+    color: var(--light-purple);
+}
+
+@media (max-width: 650px) {
+    header {
+        padding: 18px 5%;
     }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background: var(--black);
-      color: var(--white);
-      line-height: 1.55;
+    nav a {
+        display: none;
     }
-    a { color: var(--purple-bright); }
-    a:hover { color: var(--white); }
-    button, input, select, textarea { font: inherit; }
-    button, a { -webkit-tap-highlight-color: transparent; }
-    button:focus-visible, a:focus-visible, input:focus-visible,
-    select:focus-visible, textarea:focus-visible {
-      outline: 3px solid var(--purple-bright);
-      outline-offset: 3px;
-    }
-    .wrap { width: min(1120px, calc(100% - 32px)); margin-inline: auto; }
 
-    .site-header {
-      position: sticky;
-      z-index: 5;
-      top: 0;
-      background: rgba(9, 6, 13, .97);
-      border-bottom: 1px solid var(--line);
+    .logo {
+        font-size: 19px;
     }
-    .header-row {
-      min-height: 74px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-    }
-    .brand { display: inline-flex; align-items: center; gap: 11px; text-decoration: none; color: var(--white); font-weight: 800; letter-spacing: .03em; }
-    .brand img { width: 42px; height: 42px; border: 1px solid var(--line); border-radius: 13px; }
-    .main-nav { display: flex; align-items: center; gap: 22px; }
-    .main-nav a { text-decoration: none; color: var(--muted); font-size: .95rem; }
-    .main-nav a:hover { color: var(--white); }
-    .cart-toggle, .button-primary, .button-secondary, .remove-button, .close-button {
-      border: 1px solid var(--purple);
-      border-radius: 10px;
-      color: var(--white);
-      cursor: pointer;
-      font-weight: 700;
-    }
-    .cart-toggle {
-      background: var(--panel);
-      padding: 10px 13px;
-      white-space: nowrap;
-    }
-    .cart-toggle strong { color: var(--purple-bright); margin-left: 4px; }
 
     .hero {
-      padding: 72px 0 58px;
-      border-bottom: 1px solid var(--line);
-      background: radial-gradient(ellipse at 80% 18%, rgba(107, 33, 168, .24), transparent 42%);
+        padding: 70px 18px 50px;
     }
-    .hero-row { display: flex; align-items: center; justify-content: space-between; gap: 44px; }
-    .hero-copy { max-width: 670px; }
-    .eyebrow { color: var(--purple-bright); text-transform: uppercase; letter-spacing: .17em; font-size: .78rem; font-weight: 800; }
-    h1 { margin: 14px 0 16px; max-width: 700px; font-size: clamp(2.5rem, 7vw, 5rem); line-height: .99; letter-spacing: -.055em; }
-    .hero-copy p { color: var(--muted); max-width: 560px; font-size: 1.08rem; }
-    .button-primary, .button-secondary { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 11px 18px; text-decoration: none; }
-    .button-primary { background: var(--purple-dark); }
-    .button-primary:hover { background: var(--purple); color: var(--white); }
-    .button-secondary { background: transparent; }
-    .hero .button-primary { margin-top: 13px; }
-    .hero-note {
-      width: min(330px, 100%);
-      padding: 24px;
-      border: 1px solid var(--purple);
-      border-radius: 18px;
-      background: linear-gradient(145deg, var(--panel-light), var(--panel));
-    }
-    .hero-note .mark { color: var(--purple-bright); font-size: 2rem; font-weight: 900; line-height: 1; }
-    .hero-note h2 { margin: 14px 0 5px; font-size: 1.15rem; }
-    .hero-note p { margin: 0; color: var(--muted); font-size: .93rem; }
-    .hero-facts { display: flex; gap: 16px; margin-top: 22px; flex-wrap: wrap; }
-    .hero-fact { border-left: 2px solid var(--purple); padding-left: 10px; color: var(--muted); font-size: .86rem; }
 
-    .catalog { padding: 54px 0 64px; }
-    .section-intro { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 22px; }
-    .section-intro h2, .info-section h2 { margin: 5px 0 0; font-size: clamp(1.8rem, 4vw, 2.5rem); letter-spacing: -.035em; }
-    .section-intro p { margin: 0; max-width: 420px; color: var(--muted); font-size: .94rem; }
-    .category-jump { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; }
-    .category-jump a { padding: 8px 13px; border: 1px solid var(--line); border-radius: 999px; text-decoration: none; color: var(--white); font-size: .88rem; }
-    .category-jump a:hover { border-color: var(--purple); background: var(--panel); }
-    .product-category { padding-top: 15px; margin-top: 25px; scroll-margin-top: 96px; }
-    .category-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
-    .category-heading h3 { margin: 0; font-size: 1.35rem; letter-spacing: .07em; }
-    .category-heading span { color: var(--muted); font-size: .84rem; }
-    .category-heading::after { content: ""; height: 1px; flex: 1; background: var(--line); }
-    .product-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .section {
+        padding: 35px 5%;
+    }
+
+    .section-title {
+        font-size: 23px;
+    }
+
+    .products {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
     .product-card {
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      min-width: 0;
-      border: 1px solid var(--line);
-      border-radius: 15px;
-      background: var(--panel);
+        padding: 13px;
     }
-    .product-card:hover { border-color: var(--purple); }
-    .product-visual { position: relative; height: 170px; overflow: hidden; background: #0d0913; border-bottom: 1px solid var(--line); }
-    .product-visual img { display: block; width: 100%; height: 100%; object-fit: cover; }
-    .product-card[data-category="ROBLOX"] .product-visual img { object-fit: contain; padding: 18px; }
-    .coming-soon-badge {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      padding: 5px 9px;
-      border: 1px solid var(--purple-bright);
-      border-radius: 999px;
-      background: #12091d;
-      color: var(--purple-bright);
-      font-size: .76rem;
-      font-weight: 800;
-      letter-spacing: .03em;
-    }
-    .product-body { display: flex; flex: 1; flex-direction: column; padding: 16px; }
-    .product-body h4 { margin: 0 0 5px; font-size: 1.08rem; }
-    .price { min-height: 28px; margin: 0; font-weight: 800; color: var(--white); }
-    .price span + span { margin-left: 8px; color: var(--purple-bright); }
-    .edit-hint { margin: 3px 0 0; color: var(--muted); font-size: .78rem; }
-    .product-body .add-to-cart { width: 100%; margin-top: auto; padding-top: 13px; }
-    .add-to-cart { min-height: 42px; border: 1px solid var(--purple); border-radius: 9px; background: var(--purple-dark); color: var(--white); font-weight: 700; cursor: pointer; }
-    .add-to-cart:hover:not(:disabled) { background: var(--purple); }
-    .add-to-cart:disabled { cursor: not-allowed; opacity: .55; }
 
-    .info-area { padding: 12px 0 60px; border-top: 1px solid var(--line); }
-    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .info-section { padding: 22px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); scroll-margin-top: 96px; }
-    .info-section h2 { font-size: 1.25rem; }
-    .info-section p { margin: 10px 0 0; color: var(--muted); }
-    .info-section ul { padding-left: 19px; color: var(--muted); }
-    .contact-placeholder { color: var(--purple-bright); font-weight: 700; }
-    .site-footer { border-top: 1px solid var(--line); padding: 24px 0; background: #07050a; }
-    .footer-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
-    .footer-brand { font-weight: 800; }
-    .footer-tagline { margin: 3px 0 0; color: var(--muted); font-size: .9rem; }
-    .footer-links { display: flex; gap: 17px; }
-    .footer-links a { color: var(--muted); font-size: .9rem; }
+    .product-image {
+        height: 115px;
+    }
 
-    dialog {
-      width: min(720px, calc(100% - 24px));
-      max-height: min(90vh, 850px);
-      padding: 0;
-      overflow: auto;
-      border: 1px solid var(--purple);
-      border-radius: 16px;
-      background: var(--black);
-      color: var(--white);
+    .product-card h3 {
+        font-size: 14px;
     }
-    dialog::backdrop { background: rgba(0, 0, 0, .78); }
-    .dialog-content { padding: 22px; }
-    .dialog-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 15px; border-bottom: 1px solid var(--line); }
-    .dialog-head h2 { margin: 0; }
-    .close-button { width: 40px; height: 40px; background: var(--panel); font-size: 1.25rem; }
-    .cart-items { display: grid; gap: 10px; padding: 17px 0; }
-    .cart-row { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
-    .cart-row-name { font-weight: 700; }
-    .cart-row-price { color: var(--muted); font-size: .88rem; }
-    .remove-button { padding: 7px 10px; background: transparent; color: var(--purple-bright); font-size: .84rem; }
-    .remove-button:hover { background: var(--panel-light); }
-    .empty-cart { color: var(--muted); text-align: center; padding: 18px 0; }
-    .total-box { padding: 13px 15px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
-    .total-box h3 { margin: 0 0 6px; font-size: 1rem; }
-    .total-line { display: flex; justify-content: space-between; gap: 10px; margin: 3px 0; }
-    .total-line span:last-child { font-weight: 800; color: var(--purple-bright); }
-    .form-section { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line); }
-    .checkout-start { margin-top: 13px; }
-    .checkout-start button { cursor: pointer; }
-    .form-section h3 { margin: 0 0 12px; }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
-    .field { display: flex; flex-direction: column; gap: 6px; }
-    .field.full { grid-column: 1 / -1; }
-    .field label { font-size: .9rem; font-weight: 700; }
-    .field input, .field select, .field textarea {
-      width: 100%;
-      border: 1px solid var(--line);
-      border-radius: 9px;
-      background: var(--panel);
-      color: var(--white);
-      padding: 11px 12px;
-    }
-    .field textarea { min-height: 76px; resize: vertical; }
-    .field input[type="file"] { padding: 9px; }
-    .form-note, .receipt-status { color: var(--muted); font-size: .84rem; }
-    .form-note { margin: 10px 0 0; }
-    .checkout-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
-    .checkout-actions button { border: 1px solid var(--purple); border-radius: 9px; min-height: 44px; padding: 10px 14px; cursor: pointer; font-weight: 700; }
-    .send-order { background: var(--purple-dark); color: var(--white); }
-    .share-receipt { background: transparent; color: var(--purple-bright); }
-    .form-status { min-height: 24px; margin: 12px 0 0; color: var(--purple-bright); font-size: .9rem; }
-    .form-status.error { color: var(--danger); }
 
-    @media (max-width: 780px) {
-      .hero-row { align-items: flex-start; flex-direction: column; gap: 28px; }
-      .hero-note { width: 100%; }
-      .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .main-nav { gap: 13px; }
+    .product-card p {
+        font-size: 11px;
     }
-    @media (max-width: 560px) {
-      .wrap { width: min(100% - 24px, 1120px); }
-      .header-row { min-height: 65px; gap: 8px; }
-      .brand { gap: 7px; font-size: .9rem; }
-      .brand img { width: 36px; height: 36px; }
-      .main-nav { display: none; }
-      .cart-toggle { padding: 9px 10px; font-size: .88rem; }
-      .hero { padding: 55px 0 42px; }
-      .hero-facts { gap: 11px; }
-      .section-intro { align-items: flex-start; flex-direction: column; gap: 8px; }
-      .product-grid { gap: 10px; }
-      .product-visual { height: 132px; }
-      .product-body { padding: 12px; }
-      .product-body h4 { font-size: .98rem; }
-      .price { font-size: .91rem; }
-      .info-grid { grid-template-columns: 1fr; }
-      .info-section { padding: 18px; }
-      .footer-row { align-items: flex-start; flex-direction: column; }
-      .form-grid { grid-template-columns: 1fr; }
-      .field.full { grid-column: auto; }
-      .dialog-content { padding: 16px; }
-      .cart-row { align-items: flex-start; }
+
+    .price .pkr {
+        font-size: 17px;
     }
-    @media (max-width: 370px) {
-      .product-grid { grid-template-columns: 1fr; }
-      .product-visual { height: 180px; }
+
+    .buy-btn {
+        font-size: 12px;
+        padding: 10px;
     }
-  </style>
+}
+</style>
 </head>
+
 <body>
-  <header class="site-header">
-    <div class="wrap header-row">
-      <a class="brand" href="#home" aria-label="Shardex Store home">
-        <img src="/manus-storage/shardex-mark_91a30d10.svg" alt="">
-        <span>SHARDEX STORE</span>
-      </a>
-      <nav class="main-nav" aria-label="Main navigation">
-        <a href="#products">Products</a>
-        <a href="#order-information">Order info</a>
-        <a href="#contact">Contact</a>
-      </nav>
-      <button class="cart-toggle" id="open-cart" type="button" aria-haspopup="dialog">Cart <strong id="cart-count">0</strong></button>
+
+<header>
+    <div class="logo">SHARDEX<span> STORE</span></div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#store">Store</a>
+        <a href="#about">About</a>
+        <button class="cart-btn" onclick="openCart()">
+            Cart (<span id="cartCount">0</span>)
+        </button>
+    </nav>
+</header>
+
+<section class="hero" id="home">
+    <h1>WELCOME TO<br><span>SHARDEX STORE</span></h1>
+    <p>
+        Your trusted place for Robux, Minecraft and gaming products.
+        Fast service, affordable prices and easy ordering.
+    </p>
+    <a href="#store" class="hero-btn">Explore Store</a>
+</section>
+
+<section class="section" id="store">
+    <h2 class="section-title">Our Products</h2>
+    <p class="section-subtitle">Choose your product and add it to your cart.</p>
+
+    <div class="categories">
+        <button class="category-btn active" onclick="filterProducts('all', this)">All</button>
+        <button class="category-btn" onclick="filterProducts('roblox', this)">Roblox</button>
+        <button class="category-btn" onclick="filterProducts('freefire', this)">Free Fire</button>
+        <button class="category-btn" onclick="filterProducts('minecraft', this)">Minecraft</button>
     </div>
-  </header>
 
-  <main>
-    <section class="hero" id="home">
-      <div class="wrap hero-row">
-        <div class="hero-copy">
-          <div class="eyebrow">SHARDEX STORE</div>
-          <h1>The Digital Marketplace for Gamers.</h1>
-          <p>Find game top-ups and digital favorites in one simple place. Choose a product, review your cart, then contact the seller to arrange payment.</p>
-          <a class="button-primary" href="#products">Explore products</a>
-          <div class="hero-facts" aria-label="Store highlights">
-            <span class="hero-fact">Clear final prices</span>
-            <span class="hero-fact">Simple checkout</span>
-            <span class="hero-fact">Seller-assisted orders</span>
-          </div>
+    <div class="products" id="products"></div>
+</section>
+
+<section class="section" id="about">
+    <h2 class="section-title">About Shardex Store</h2>
+    <p class="section-subtitle">
+        Shardex Store provides digital gaming products.
+        Add your selected products to the cart and place your order.
+    </p>
+</section>
+
+<footer>
+    © 2026 <span>Shardex Store</span>. All rights reserved.
+</footer>
+
+<div class="cart-panel" id="cartPanel">
+    <div class="cart-box">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-btn" onclick="closeCart()">×</button>
         </div>
-        <aside class="hero-note" aria-label="How ordering works">
-          <div class="mark" aria-hidden="true">◈</div>
-          <h2>Pick your next unlock.</h2>
-          <p>Add available products to your cart. The seller will share payment details on WhatsApp.</p>
-        </aside>
-      </div>
-    </section>
 
-    <section class="catalog wrap" id="products">
-      <div class="section-intro">
-        <div>
-          <div class="eyebrow">THE CATALOG</div>
-          <h2>Choose your game</h2>
+        <div id="cartItems"></div>
+
+        <div class="cart-total">
+            <span>Total</span>
+            <span id="cartTotal">0 PKR</span>
         </div>
-        <p>Displayed amounts are final prices. Products marked “Coming Soon” or with an unset price cannot be added yet.</p>
-      </div>
-      <nav class="category-jump" aria-label="Product categories">
-        <a href="#roblox">Roblox</a>
-        <a href="#free-fire">Free Fire</a>
-        <a href="#minecraft">Minecraft</a>
-      </nav>
 
-      <!-- Product names, final prices, availability, and image URLs are edited directly on each card below. -->
-      <section class="product-category" id="roblox" aria-labelledby="roblox-title">
-        <div class="category-heading"><h3 id="roblox-title">ROBLOX</h3><span>Robux packages</span></div>
-        <div class="product-grid">
-          <article class="product-card" data-id="robux-50" data-category="ROBLOX" data-price-pkr="180" data-price-usd="0.64" data-price-inr="" data-availability="available">
-            <div class="product-visual"><img src="/manus-storage/robux-icon_03a206c5.jpg" alt="Robux symbol"></div>
-            <div class="product-body"><h4>50 Robux</h4><p class="price" data-price></p><p class="edit-hint" data-edit-hint></p><button class="add-to-cart" data-add type="button">Add to Cart</button></div>
-          </article>
-          <article class="product-card" data-id="robux-100" data-category="ROBLOX" data-price-pkr="360" data-price-usd="1.29" data-price-inr="" data-availability="available">
-            <div class="product-visual"><img src="/manus-storage/robux-icon_03a206c5.jpg" alt="Robux symbol"></div>
-            <div class="product-body"><h4>100 Robux</h4><p class="price" data-price></p><p class="edit-hint" data-edit-hint></p><button class="add-to-cart" data-add type="button">Add to Cart</button></div>
-          </article>
-          <article class="product-card" data-id="robux-200" data-category="ROBLOX" data-price-pkr="720" data-price-usd="2.57" data-price-inr="" data-availability="available">
-            <div class="product-visual"><img src="/manus-storage/robux-icon_03a206c5.jpg" alt="Robux symbol"></div>
-            <div class="product-body"><h4>200 Robux</h4><p class="price" data-price></p><p class="edit-hint" data-edit-hint></p><button class="add-to-cart" data-add type="button">Add to Cart</button></div>
-          </article>
-          <article class="product-card" data-id="robux-300" data-category="ROBLOX" data-price-pkr="1080" data-price-usd="3.86" data-price-inr="" data-availability="available">
-            <div class="product-visual"><img src="/manus-storage/robux-icon_03a206c5.jpg" alt="Robux symbol"></div>
-            <div class="product-body"><h4>300 Robux</h4><p class="price" data-price></p><p class="edit-hint" data-edit-hint></p><button class="add-to-cart" data-add type="button">Add to Cart</button></div>
-          </article>
-          <article class="product-card" data-id="robux-500" data-category="ROBLOX" data-price-pkr="1800" data-price-usd="6.43" data-price-inr="" data-availability="available">
-            <div class="product-visual"><img src="/manus-storage/robux-icon_03a206c5.jpg" alt="Robux symbol"></div>
-            <div class="product-body"><h4>500 Robux</h4><p class="price" data-price></p><p class="edit-hint" data-edit-hint></p><button class="add-to-cart" data-add type="button">Add to Cart</button></div>
-          </article>
-          <article class="product-card" data-id="robux-1000" data-category="ROBLOX" data-price-pkr="3600" data-price-usd="12.86" data-price-inr="" data-availability="available">
-            <div class="product-visual"><img src="/manus-storage/robux-icon_03a206c5.jpg" alt="Robux symbol"></div>
-            <div class="product-body"><h4>1,000 Robux</h4><p class="price" data-price></p><p class="edit-hint" data-edit-hint></p><button class="add-to-cart" data-add type="button">Add to Cart</button></div>
-          </article>
-        </div>
-      </section>
-
-      <section class="product-category" id="free-fire" aria-labelledby="free-fire-title">
-        <div class="category-heading"><h3 id="free-fire-title">FREE FIRE</h3><span>Top-ups and passes</span></div>
-        <div class="product-grid">
-          <article class="product-card" data-id="ff-diamonds" data-category="FREE FIRE" data-price-pkr="" data-price-usd="" data-price-inr="" data-availability="price-needed">
-            <div class="product-visual"><img src="/manus-storage/freefire-diamonds_957df53b.webp" alt="Free Fire diamond top-up artwork"></div>
-            <div class="product-body"><h4>Diamonds</h4><p class="price" data-price></p><p class="edit-hint" data-edit-hint></p><button class="add-to-cart" data-add type="button">Add to Cart</button></div>
-          </article>
-          <article class="product-card" data-id="ff-membership" data-category="FREE FIRE" data-price-pkr="" data-price-usd="" data-price-inr="" data-availability="price-needed">
-            <div class="product-visual"><img src="/manus-storage/freefire-membership_a9d9ce8e.svg" alt="Purple premium membership emblem"></div>
-            <div class="product-body"><h4>Memberships</h4><p class="price" data-price></p><p class="edit-hint" data-edit-hint></p><button class="add-to-cart" data-add type="button">Add to Cart</button></div>
-          </article>
-          <article class="product-card" data-id="ff-level-up-pass" data-category="FREE FIRE" data-price-pkr="" data-price-usd="" data-price-inr="" data-availability="price-needed">
-            <div class="product-visual"><img src="/manus-storage/freefire-level-up_78cf5358.webp" alt="Free Fire Level Up Pass artwork"></div>
-            <div class="product-body"><h4>Level Up Pass</h4><p class="price" data-price></p><p class="edit-hint" data-edit-hint></p><button class="add-to-cart" data-add type="button">Add to Cart</button></div>
-          </article>
-        </div>
-      </section>
-
-      <section class="product-category" id="minecraft" aria-labelledby="minecraft-title">
-        <div class="category-heading"><h3 id="minecraft-title">MINECRAFT</h3><span>PC and mobile editions</span></div>
-        <div class="product-grid">
-          <article class="product-card" data-id="minecraft-bedrock-pc" data-category="MINECRAFT" data-price-pkr="" data-price-usd="" data-price-inr="" data-availability="coming-soon">
-            <div class="product-visual"><img src="/manus-storage/minecraft-bedrock_46409c48.png" alt="Minecraft world artwork"><span class="coming-soon-badge">Coming Soon</span></div>
-            <div class="product-body"><h4>Minecraft Bedrock PC</h4><p class="price" data-price></p><p class="edit-hint" data-edit-hint></p><button class="add-to-cart" data-add type="button">Add to Cart</button></div>
-          </article>
-          <article class="product-card" data-id="minecraft-dungeons" data-category="MINECRAFT" data-price-pkr="" data-price-usd="" data-price-inr="" data-availability="coming-soon">
-            <div class="product-visual"><img src="/manus-storage/minecraft-dungeons_a0847200.jpg" alt="Minecraft Dungeons game artwork"><span class="coming-soon-badge">Coming Soon</span></div>
-            <div class="product-body"><h4>Minecraft Dungeons</h4><p class="price" data-price></p><p class="edit-hint" data-edit-hint></p><button class="add-to-cart" data-add type="button">Add to Cart</button></div>
-          </article>
-          <article class="product-card" data-id="minecraft-pocket-android" data-category="MINECRAFT" data-price-pkr="300" data-price-usd="1.06" data-price-inr="94" data-availability="available">
-            <div class="product-visual"><img src="/manus-storage/minecraft-bedrock_46409c48.png" alt="Minecraft world artwork"></div>
-            <div class="product-body"><h4>Minecraft Pocket Edition (Android)</h4><p class="price" data-price></p><p class="edit-hint" data-edit-hint></p><button class="add-to-cart" data-add type="button">Add to Cart</button></div>
-          </article>
-        </div>
-      </section>
-    </section>
-
-    <section class="info-area">
-      <div class="wrap info-grid">
-        <section class="info-section" id="order-information">
-          <div class="eyebrow">BEFORE YOU ORDER</div>
-          <h2>Order Information</h2>
-          <p>Add available products to the cart and continue to checkout. Contact the seller on WhatsApp to receive payment details. After you pay, send your receipt or screenshot to the seller.</p>
-          <p>For order updates, customers should contact the seller directly. This simple website does not store orders or upload receipts to a server.</p>
-        </section>
-        <section class="info-section" id="terms">
-          <div class="eyebrow">PLEASE READ</div>
-          <h2>Terms of Service</h2>
-          <p>Review the game, platform, and product before paying. Confirm payment instructions and expected delivery with the seller. Orders are handled manually, and updates are provided by the seller on WhatsApp.</p>
-          <p>Do not send payment until you have received the seller's payment details. If a product is marked “Coming Soon” or has no price, it is not available to order yet.</p>
-        </section>
-        <section class="info-section" id="contact">
-          <div class="eyebrow">NEED HELP?</div>
-          <h2>Contact Us</h2>
-          <p>For payment details and order updates, contact the Shardex Store seller on WhatsApp.</p>
-          <p class="contact-placeholder" id="contact-note">WhatsApp contact not set yet. Add your number in the editable setting near the bottom of this HTML file.</p>
-        </section>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="wrap footer-row">
-      <div>
-        <div class="footer-brand">Shardex Store</div>
-        <p class="footer-tagline">The Digital Marketplace for Gamers.</p>
-      </div>
-      <nav class="footer-links" aria-label="Footer navigation">
-        <a href="#terms">Terms of Service</a>
-        <a href="#contact">Contact Us</a>
-      </nav>
+        <button class="checkout-btn" onclick="checkout()">
+            Order on WhatsApp
+        </button>
     </div>
-  </footer>
+</div>
 
-  <dialog id="cart-dialog" aria-labelledby="cart-title">
-    <div class="dialog-content">
-      <div class="dialog-head">
-        <div><div class="eyebrow">YOUR SELECTION</div><h2 id="cart-title">Shopping cart</h2></div>
-        <button class="close-button" id="close-cart" type="button" aria-label="Close cart">×</button>
-      </div>
-      <div class="cart-items" id="cart-items" aria-live="polite"></div>
-      <div class="total-box" id="cart-totals"></div>
-      <p class="form-note">Currency totals are shown separately. No currency conversion is calculated.</p>
-      <div class="checkout-start"><button class="button-primary" id="proceed-checkout" type="button">Proceed to checkout</button></div>
-      <div class="form-section" id="checkout-section">
-        <h3>Checkout</h3>
-        <form id="checkout-form">
-          <div class="form-grid">
-            <div class="field">
-              <label for="customer-name">Name</label>
-              <input id="customer-name" name="name" autocomplete="name" required>
+<script>
+const WHATSAPP_NUMBER = ""; 
+// Apna WhatsApp number country code ke sath yahan likho.
+// Example: 923001234567
+
+const productsData = [
+    {
+        id: 1,
+        name: "50 Robux",
+        category: "roblox",
+        image: "robux.png",
+        description: "Roblox Robux package",
+        price: 198,
+        usd: "$0.70"
+    },
+    {
+        id: 2,
+        name: "100 Robux",
+        category: "roblox",
+        image: "robux.png",
+        description: "Roblox Robux package",
+        price: 396,
+        usd: "$1.40"
+    },
+    {
+        id: 3,
+        name: "200 Robux",
+        category: "roblox",
+        image: "robux.png",
+        description: "Roblox Robux package",
+        price: 792,
+        usd: "$2.80"
+    },
+    {
+        id: 4,
+        name: "300 Robux",
+        category: "roblox",
+        image: "robux.png",
+        description: "Roblox Robux package",
+        price: 1188,
+        usd: "$4.20"
+    },
+    {
+        id: 5,
+        name: "500 Robux",
+        category: "roblox",
+        image: "robux.png",
+        description: "Roblox Robux package",
+        price: 1980,
+        usd: "$7.00"
+    },
+    {
+        id: 6,
+        name: "1000 Robux",
+        category: "roblox",
+        image: "robux.png",
+        description: "Roblox Robux package",
+        price: 3960,
+        usd: "$14.01"
+    },
+    {
+        id: 7,
+        name: "Minecraft Pocket Edition",
+        category: "minecraft",
+        image: "mcpocket.png",
+        description: "Minecraft PE for Android",
+        price: 300,
+        usd: "$1.06"
+    },
+    {
+        id: 8,
+        name: "Minecraft Java Edition",
+        category: "minecraft",
+        image: "mcjava.png",
+        description: "Minecraft Java Edition",
+        price: 0,
+        usd: "Coming Soon",
+        comingSoon: true
+    },
+    {
+        id: 9,
+        name: "Minecraft Dungeons",
+        category: "minecraft",
+        image: "mcdouengen.png",
+        description: "Minecraft Dungeons",
+        price: 0,
+        usd: "Coming Soon",
+        comingSoon: true
+    },
+    {
+        id: 10,
+        name: "Free Fire Diamonds",
+        category: "freefire",
+        image: "diamonds.png",
+        description: "Free Fire diamond top-up",
+        price: 0,
+        usd: "Price Soon",
+        comingSoon: true
+    },
+    {
+        id: 11,
+        name: "Weekly Membership",
+        category: "freefire",
+        image: "weeklymembership.png",
+        description: "Free Fire weekly membership",
+        price: 0,
+        usd: "Price Soon",
+        comingSoon: true
+    },
+    {
+        id: 12,
+        name: "Monthly Membership",
+        category: "freefire",
+        image: "monthlymembership.png",
+        description: "Free Fire monthly membership",
+        price: 0,
+        usd: "Price Soon",
+        comingSoon: true
+    },
+    {
+        id: 13,
+        name: "Level Pass",
+        category: "freefire",
+        image: "levelpass.png",
+        description: "Free Fire level pass",
+        price: 0,
+        usd: "Price Soon",
+        comingSoon: true
+    }
+];
+
+let cart = [];
+
+function renderProducts(category = "all") {
+    const container = document.getElementById("products");
+
+    const filtered = category === "all"
+        ? productsData
+        : productsData.filter(product => product.category === category);
+
+    container.innerHTML = filtered.map(product => `
+        <div class="product-card">
+            <img
+                src="${product.image}"
+                class="product-image"
+                alt="${product.name}"
+                onerror="this.style.display='none'"
+            >
+
+            <h3>${product.name}</h3>
+            <p>${product.description}</p>
+
+            <div class="price">
+                <span class="pkr">
+                    ${product.comingSoon ? "Coming Soon" : product.price + " PKR"}
+                </span>
+                <span class="usd">${product.usd}</span>
             </div>
-            <div class="field">
-              <label for="customer-email">Email address</label>
-              <input id="customer-email" name="email" type="email" autocomplete="email" required>
-            </div>
-            <div class="field full">
-              <label for="selected-products">Selected products</label>
-              <textarea id="selected-products" name="selected-products" readonly required></textarea>
-            </div>
-            <div class="field full">
-              <label for="payment-method">Payment method</label>
-              <select id="payment-method" name="payment-method" required>
-                <option value="">Choose a payment method</option>
-                <optgroup label="PKR">
-                  <option>JazzCash</option>
-                  <option>Easypaisa</option>
-                  <option>Other</option>
-                </optgroup>
-                <optgroup label="CRYPTO">
-                  <option>Litecoin (LTC)</option>
-                  <option>Solana (SOL)</option>
-                </optgroup>
-              </select>
-            </div>
-            <div class="field full">
-              <label for="receipt-file">Payment receipt or screenshot (optional)</label>
-              <input id="receipt-file" name="receipt" type="file" accept="image/*,application/pdf">
-              <span class="receipt-status" id="receipt-status">A receipt is shared from your device; it is not uploaded by this website.</span>
-            </div>
-          </div>
-          <p class="form-note">This is a static storefront. Your order is not submitted automatically; checkout prepares a message for the seller on WhatsApp.</p>
-          <div class="checkout-actions">
-            <button class="send-order" type="submit">Continue to WhatsApp</button>
-            <button class="share-receipt" id="share-receipt" type="button">Share selected receipt</button>
-          </div>
-          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
-        </form>
-      </div>
-    </div>
-  </dialog>
 
-  <script>
-    // Set your seller contact here. Enter an international WhatsApp number using digits only; leave blank until you have one.
-    const WHATSAPP_NUMBER = "";
+            <button
+                class="buy-btn ${product.comingSoon ? "coming-soon" : ""}"
+                ${product.comingSoon ? "disabled" : ""}
+                onclick="addToCart(${product.id})"
+            >
+                ${product.comingSoon ? "Coming Soon" : "Add to Cart"}
+            </button>
+        </div>
+    `).join("");
+}
 
-    const cart = new Map();
-    const currencyOrder = ["pkr", "usd", "inr"];
-    const currencyLabels = { pkr: "PKR", usd: "USD", inr: "INR" };
-    const currencySymbols = { pkr: "PKR ", usd: "$", inr: "INR " };
-    const cards = [...document.querySelectorAll(".product-card")];
-    const cartDialog = document.getElementById("cart-dialog");
-    const cartCount = document.getElementById("cart-count");
-    const cartItems = document.getElementById("cart-items");
-    const cartTotals = document.getElementById("cart-totals");
-    const selectedProducts = document.getElementById("selected-products");
-    const formStatus = document.getElementById("form-status");
-
-    function readPrices(card) {
-      return {
-        pkr: Number(card.dataset.pricePkr) || 0,
-        usd: Number(card.dataset.priceUsd) || 0,
-        inr: Number(card.dataset.priceInr) || 0
-      };
-    }
-
-    function formatMoney(currency, amount) {
-      const decimals = currency === "usd" ? 2 : 0;
-      const formatted = new Intl.NumberFormat("en-US", {
-        minimumFractionDigits: decimals,
-        maximumFractionDigits: decimals
-      }).format(amount);
-      return currencySymbols[currency] + formatted;
-    }
-
-    function productPriceText(prices) {
-      return currencyOrder
-        .filter((currency) => prices[currency] > 0)
-        .map((currency) => formatMoney(currency, prices[currency]))
-        .join(" / ");
-    }
-
-    function setupProductCards() {
-      cards.forEach((card) => {
-        const price = card.querySelector("[data-price]");
-        const hint = card.querySelector("[data-edit-hint]");
-        const button = card.querySelector("[data-add]");
-        const prices = readPrices(card);
-        const availability = card.dataset.availability;
-        const hasPrice = currencyOrder.some((currency) => prices[currency] > 0);
-
-        if (availability === "coming-soon") {
-          price.textContent = "Coming Soon";
-          hint.textContent = "";
-          button.disabled = true;
-        } else if (!hasPrice) {
-          price.textContent = "Price not set";
-          hint.textContent = "Edit this card’s data-price-pkr (or another currency) in the HTML to enable ordering.";
-          button.disabled = true;
-        } else {
-          price.textContent = productPriceText(prices);
-          hint.textContent = "";
-          button.disabled = availability !== "available";
-        }
-
-        button.addEventListener("click", () => addToCart(card));
-      });
-    }
-
-    function addToCart(card) {
-      const id = card.dataset.id;
-      const current = cart.get(id);
-      const item = {
-        id,
-        name: card.querySelector("h4").textContent,
-        image: card.querySelector("img").src,
-        prices: readPrices(card),
-        quantity: current ? current.quantity + 1 : 1
-      };
-      cart.set(id, item);
-      renderCart();
-    }
-
-    function removeFromCart(id) {
-      cart.delete(id);
-      renderCart();
-    }
-
-    function getTotals() {
-      const totals = { pkr: 0, usd: 0, inr: 0 };
-      cart.forEach((item) => {
-        currencyOrder.forEach((currency) => {
-          totals[currency] += item.prices[currency] * item.quantity;
-        });
-      });
-      return totals;
-    }
-
-    function getSelectedSummary() {
-      if (cart.size === 0) return "";
-      return [...cart.values()].map((item) => {
-        const price = productPriceText(item.prices);
-        return `${item.quantity} × ${item.name} — ${price}`;
-      }).join("\n");
-    }
-
-    function renderCart() {
-      cartItems.replaceChildren();
-      let itemCount = 0;
-      cart.forEach((item) => { itemCount += item.quantity; });
-      cartCount.textContent = String(itemCount);
-      selectedProducts.value = getSelectedSummary();
-
-      if (cart.size === 0) {
-        const empty = document.createElement("p");
-        empty.className = "empty-cart";
-        empty.textContent = "Your cart is empty. Add an available product to begin.";
-        cartItems.append(empty);
-      } else {
-        cart.forEach((item) => {
-          const row = document.createElement("div");
-          row.className = "cart-row";
-          const text = document.createElement("div");
-          const name = document.createElement("div");
-          name.className = "cart-row-name";
-          name.textContent = `${item.quantity} × ${item.name}`;
-          const price = document.createElement("div");
-          price.className = "cart-row-price";
-          price.textContent = productPriceText(item.prices);
-          text.append(name, price);
-          const remove = document.createElement("button");
-          remove.className = "remove-button";
-          remove.type = "button";
-          remove.textContent = "Remove";
-          remove.setAttribute("aria-label", `Remove ${item.name} from cart`);
-          remove.addEventListener("click", () => removeFromCart(item.id));
-          row.append(text, remove);
-          cartItems.append(row);
-        });
-      }
-
-      const totals = getTotals();
-      cartTotals.replaceChildren();
-      const heading = document.createElement("h3");
-      heading.textContent = "Total";
-      cartTotals.append(heading);
-      const currenciesWithValue = currencyOrder.filter((currency) => totals[currency] > 0);
-      if (currenciesWithValue.length === 0) {
-        const noTotal = document.createElement("p");
-        noTotal.className = "form-note";
-        noTotal.textContent = "Your total will appear here after adding priced products.";
-        cartTotals.append(noTotal);
-      } else {
-        currenciesWithValue.forEach((currency) => {
-          const line = document.createElement("div");
-          line.className = "total-line";
-          const label = document.createElement("span");
-          label.textContent = currencyLabels[currency];
-          const value = document.createElement("span");
-          const decimals = currency === "usd" ? 2 : 0;
-          value.textContent = new Intl.NumberFormat("en-US", {
-            minimumFractionDigits: decimals,
-            maximumFractionDigits: decimals
-          }).format(totals[currency]);
-          line.append(label, value);
-          cartTotals.append(line);
-        });
-      }
-      formStatus.textContent = "";
-      formStatus.classList.remove("error");
-    }
-
-    function orderMessage() {
-      const name = document.getElementById("customer-name").value.trim();
-      const email = document.getElementById("customer-email").value.trim();
-      const payment = document.getElementById("payment-method").value;
-      const totals = getTotals();
-      const totalLines = currencyOrder
-        .filter((currency) => totals[currency] > 0)
-        .map((currency) => formatMoney(currency, totals[currency]))
-        .join("; ");
-      return [
-        "Shardex Store order request",
-        `Name: ${name}`,
-        `Email: ${email}`,
-        `Selected products:\n${getSelectedSummary()}`,
-        `Total: ${totalLines || "Not available"}`,
-        `Payment method: ${payment}`,
-        "Please share the payment details and order update information."
-      ].join("\n");
-    }
-
-    document.getElementById("open-cart").addEventListener("click", () => {
-      cartDialog.showModal();
-    });
-    document.getElementById("close-cart").addEventListener("click", () => {
-      cartDialog.close();
-    });
-    document.getElementById("proceed-checkout").addEventListener("click", () => {
-      document.getElementById("checkout-section").scrollIntoView({ block: "start" });
-      document.getElementById("customer-name").focus({ preventScroll: true });
-    });
-    cartDialog.addEventListener("click", (event) => {
-      if (event.target === cartDialog) cartDialog.close();
+function filterProducts(category, button) {
+    document.querySelectorAll(".category-btn").forEach(btn => {
+        btn.classList.remove("active");
     });
 
-    document.getElementById("checkout-form").addEventListener("submit", (event) => {
-      event.preventDefault();
-      formStatus.classList.remove("error");
-      if (cart.size === 0) {
-        formStatus.textContent = "Add at least one priced product to your cart before checkout.";
-        formStatus.classList.add("error");
+    button.classList.add("active");
+    renderProducts(category);
+}
+
+function addToCart(id) {
+    const product = productsData.find(item => item.id === id);
+    if (!product || product.comingSoon) return;
+
+    const existing = cart.find(item => item.id === id);
+
+    if (existing) {
+        existing.quantity++;
+    } else {
+        cart.push({...product, quantity: 1});
+    }
+
+    updateCart();
+}
+
+function removeFromCart(id) {
+    cart = cart.filter(item => item.id !== id);
+    updateCart();
+}
+
+function updateCart() {
+    const count = cart.reduce((total, item) => total + item.quantity, 0);
+    document.getElementById("cartCount").textContent = count;
+
+    const container = document.getElementById("cartItems");
+
+    if (cart.length === 0) {
+        container.innerHTML = `<div class="empty-cart">Your cart is empty.</div>`;
+    } else {
+        container.innerHTML = cart.map(item => `
+            <div class="cart-item">
+                <div>
+                    <strong>${item.name}</strong><br>
+                    ${item.quantity} × ${item.price} PKR
+                </div>
+
+                <button class="remove-btn" onclick="removeFromCart(${item.id})">
+                    Remove
+                </button>
+            </div>
+        `).join("");
+    }
+
+    const total = cart.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+    );
+
+    document.getElementById("cartTotal").textContent = total + " PKR";
+}
+
+function openCart() {
+    document.getElementById("cartPanel").style.display = "flex";
+}
+
+function closeCart() {
+    document.getElementById("cartPanel").style.display = "none";
+}
+
+function checkout() {
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
         return;
-      }
-      if (!WHATSAPP_NUMBER.trim()) {
-        formStatus.textContent = "Before using this button, add your WhatsApp number to WHATSAPP_NUMBER near the bottom of index.html. No number has been invented.";
-        formStatus.classList.add("error");
+    }
+
+    if (!WHATSAPP_NUMBER) {
+        alert("Please add your WhatsApp number in the HTML code first.");
         return;
-      }
-      const url = `https://wa.me/${WHATSAPP_NUMBER.trim()}?text=${encodeURIComponent(orderMessage())}`;
-      window.open(url, "_blank", "noopener");
-      formStatus.textContent = "WhatsApp opened with your order details. Send the message to contact the seller.";
+    }
+
+    let message = "Hello Shardex Store! I want to place an order:\n\n";
+
+    cart.forEach(item => {
+        message += `${item.name} × ${item.quantity} = ${item.price * item.quantity} PKR\n`;
     });
 
-    document.getElementById("share-receipt").addEventListener("click", async () => {
-      const fileInput = document.getElementById("receipt-file");
-      const file = fileInput.files[0];
-      const receiptStatus = document.getElementById("receipt-status");
-      if (!file) {
-        receiptStatus.textContent = "Choose a receipt image or PDF first.";
-        return;
-      }
-      const shareData = {
-        title: "Shardex Store payment receipt",
-        text: `Payment receipt for this order:\n${getSelectedSummary()}`,
-        files: [file]
-      };
-      try {
-        if (navigator.canShare && navigator.canShare({ files: [file] }) && navigator.share) {
-          await navigator.share(shareData);
-          receiptStatus.textContent = "Use your device share sheet to send the receipt to the seller.";
-          return;
-        }
-      } catch (error) {
-        if (error.name === "AbortError") {
-          receiptStatus.textContent = "Sharing was cancelled. You can try again or attach the file manually in WhatsApp.";
-          return;
-        }
-      }
-      if (WHATSAPP_NUMBER.trim()) {
-        const receiptMessage = "I have paid for my Shardex Store order. I will attach the payment receipt in this WhatsApp chat.";
-        window.open(`https://wa.me/${03343498141.trim()}?text=${encodeURIComponent(receiptMessage)}`, "_blank", "noopener");
-      }
-      receiptStatus.textContent = "The website has not uploaded this file. Open WhatsApp and attach the selected receipt manually.";
-    });
+    const total = cart.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+    );
 
-    setupProductCards();
-    renderCart();
-  </script>
+    message += `\nTotal: ${total} PKR`;
+
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+    window.open(url, "_blank");
+}
+
+renderProducts();
+updateCart();
+</script>
+
 </body>
 </html>
