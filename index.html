@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +18,11 @@
     --border:#2b2639;
 }
 
-* {margin:0;padding:0;box-sizing:border-box;}
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
 body {
     background:var(--bg);
@@ -58,7 +61,10 @@ nav a {
     font-size:14px;
 }
 
-button {cursor:pointer;font-family:inherit;}
+button {
+    cursor:pointer;
+    font-family:inherit;
+}
 
 .cart-open,.hero-button {
     background:var(--purple);
@@ -272,6 +278,7 @@ footer {
 .cart-item-price {
     color:var(--muted);
     font-size:12px;
+    line-height:1.8;
 }
 
 .quantity-controls {
@@ -298,13 +305,68 @@ footer {
     margin-top:5px;
 }
 
+.cart-summary {
+    border-top:1px solid var(--border);
+    margin-top:14px;
+    padding-top:14px;
+    display:grid;
+    gap:9px;
+    font-size:13px;
+}
+
+.summary-row {
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    color:#c8c1d9;
+}
+
+.summary-row strong {color:white;}
+.summary-row.discount strong {color:#72e5a1;}
+
 .cart-total {
     display:flex;
     justify-content:space-between;
-    margin:20px 0;
+    margin:12px 0;
     font-size:18px;
     font-weight:700;
 }
+
+.coupon-area {
+    display:flex;
+    gap:8px;
+    margin:16px 0;
+}
+
+.coupon-area input {
+    min-width:0;
+    flex:1;
+    background:#0d0b14;
+    color:white;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:11px;
+    font:inherit;
+    font-size:13px;
+}
+
+.coupon-area button {
+    background:var(--purple);
+    color:white;
+    border:0;
+    border-radius:8px;
+    padding:0 14px;
+    font-weight:600;
+}
+
+.coupon-message {
+    font-size:12px;
+    margin-top:-8px;
+    margin-bottom:12px;
+}
+
+.coupon-message.success {color:#72e5a1;}
+.coupon-message.error {color:#ff8585;}
 
 /* CUSTOMER DETAILS */
 .customer-details {
@@ -350,6 +412,73 @@ footer {
     background:#25d366;
     color:#07150b;
     font-weight:700;
+}
+
+/* ORDER POPUP */
+.order-modal {
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:200;
+    background:#000c;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+}
+
+.order-modal.show {display:flex;}
+
+.order-modal-box {
+    width:100%;
+    max-width:500px;
+    max-height:90vh;
+    overflow-y:auto;
+    background:#14121d;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:22px;
+}
+
+.order-modal-box h2 {
+    font:700 20px 'Orbitron',sans-serif;
+    margin-bottom:12px;
+}
+
+.order-preview {
+    background:#0b0a11;
+    border:1px solid var(--border);
+    border-radius:9px;
+    padding:14px;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+    color:#e9e3f7;
+    font-size:12px;
+    line-height:1.7;
+    margin-bottom:14px;
+}
+
+.order-modal-actions {
+    display:grid;
+    gap:9px;
+}
+
+.copy-continue {
+    width:100%;
+    border:0;
+    border-radius:9px;
+    background:#25d366;
+    color:#07150b;
+    padding:13px;
+    font-weight:700;
+}
+
+.cancel-order {
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:9px;
+    background:transparent;
+    color:white;
+    padding:11px;
 }
 
 @media(max-width:650px) {
@@ -406,6 +535,7 @@ footer {
 
 <footer>© 2026 Shardex Store. All rights reserved.</footer>
 
+<!-- CART MODAL -->
 <div class="cart-overlay" id="cartOverlay" onclick="overlayClick(event)">
     <div class="cart-box">
         <div class="cart-header">
@@ -415,43 +545,66 @@ footer {
 
         <div id="cartItems"></div>
 
-        <div class="cart-total">
-            <span>Total</span>
-            <span id="cartTotal">0 PKR</span>
+        <div class="cart-summary">
+            <div class="summary-row">
+                <span>Price (before tax)</span>
+                <strong id="cartSubtotal">0 PKR</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Tax</span>
+                <strong id="cartTax">0 PKR</strong>
+            </div>
+
+            <div class="summary-row discount" id="discountRow" style="display:none">
+                <span>Coupon Discount</span>
+                <strong id="cartDiscount">-0 PKR</strong>
+            </div>
+
+            <div class="cart-total">
+                <span>Final Total</span>
+                <span id="cartTotal">0 PKR</span>
+            </div>
         </div>
 
-        <!-- CUSTOMER DETAILS -->
+        <div class="coupon-area">
+            <input id="couponInput" type="text" placeholder="Enter promo code">
+            <button onclick="applyCoupon()">Apply</button>
+        </div>
+
+        <div id="couponMessage" class="coupon-message"></div>
+
         <div class="customer-details">
             <h3>Customer Details</h3>
 
             <div>
-                <label for="customerEmail">Email Address *</label>
-                <input type="email" id="customerEmail"
-                    placeholder="Enter your email" autocomplete="email">
+                <label for="customerName">Name *</label>
+                <input type="text" id="customerName" placeholder="Enter your name">
             </div>
 
             <div>
-                <label for="customerUsername">Your Username *</label>
-                <input type="text" id="customerUsername"
-                    placeholder="Enter your username" autocomplete="username">
+                <label for="customerEmail">Email Address *</label>
+                <input type="email" id="customerEmail" placeholder="Enter your email">
+            </div>
+
+            <div>
+                <label for="customerUsername">Username *</label>
+                <input type="text" id="customerUsername" placeholder="Enter your username">
             </div>
 
             <div class="game-field" id="freeFireField">
                 <label for="freeFireUID">Free Fire UID *</label>
-                <input type="text" id="freeFireUID"
-                    placeholder="Enter your Free Fire UID" inputmode="numeric">
+                <input type="text" id="freeFireUID" placeholder="Enter your Free Fire UID">
             </div>
 
             <div class="game-field" id="robloxField">
                 <label for="robloxUsername">Roblox Username *</label>
-                <input type="text" id="robloxUsername"
-                    placeholder="Enter your Roblox username">
+                <input type="text" id="robloxUsername" placeholder="Enter your Roblox username">
             </div>
 
             <div class="game-field" id="minecraftField">
                 <label for="minecraftGamertag">Minecraft Gamertag *</label>
-                <input type="text" id="minecraftGamertag"
-                    placeholder="Enter your Minecraft Gamertag">
+                <input type="text" id="minecraftGamertag" placeholder="Enter your Minecraft Gamertag">
             </div>
         </div>
 
@@ -461,33 +614,211 @@ footer {
     </div>
 </div>
 
+<!-- ORDER DETAILS POPUP -->
+<div class="order-modal" id="orderModal">
+    <div class="order-modal-box">
+        <h2>Confirm Your Order</h2>
+        <p style="color:var(--muted);font-size:12px;margin-bottom:12px">
+            Copy your order details to continue. This popup stays open until copied.
+        </p>
+
+        <div class="order-preview" id="orderPreview"></div>
+
+        <div class="order-modal-actions">
+            <button class="copy-continue" onclick="copyAndContinue()">
+                Copy Details &amp; Continue
+            </button>
+            <button class="cancel-order" onclick="closeOrderModal()">
+                Back to Cart
+            </button>
+        </div>
+    </div>
+</div>
+
 <script>
 "use strict";
 
-// WhatsApp number country code ke sath.
-// Example: 923001234567
+/* WHATSAPP NUMBER
+   Country code ke sath number likho, + sign ke baghair.
+   Example: 923001234567
+*/
 const WHATSAPP_NUMBER = "";
 
+
+/* COUPON CODES
+   SDX20 = 20% discount
+   Apne codes yahan add kar sakte ho.
+*/
+const PROMO_CODES = {
+    "SDX20": 20
+};
+
+
+/* PRODUCT DATA
+   price = final price with tax included
+   tax = tax amount already included in final price
+*/
 const productsData = [
-    {id:1,name:"50 Robux",category:"roblox",image:"robuxs.png",description:"Roblox Robux package",price:198,usd:"$0.70"},
-    {id:2,name:"100 Robux",category:"roblox",image:"robuxs.png",description:"Roblox Robux package",price:396,usd:"$1.40"},
-    {id:3,name:"200 Robux",category:"roblox",image:"robuxs.png",description:"Roblox Robux package",price:792,usd:"$2.80"},
-    {id:4,name:"300 Robux",category:"roblox",image:"robuxs.png",description:"Roblox Robux package",price:1188,usd:"$4.20"},
-    {id:5,name:"500 Robux",category:"roblox",image:"robuxs.png",description:"Roblox Robux package",price:1980,usd:"$7.00"},
-    {id:6,name:"1000 Robux",category:"roblox",image:"robuxs.png",description:"Roblox Robux package",price:3960,usd:"$14.01"},
+    {
+        id:1,
+        name:"50 Robux",
+        category:"roblox",
+        image:"robuxs.png",
+        description:"Roblox Robux package",
+        price:198,
+        basePrice:165,
+        tax:33,
+        usd:"$0.70"
+    },
+    {
+        id:2,
+        name:"100 Robux",
+        category:"roblox",
+        image:"robuxs.png",
+        description:"Roblox Robux package",
+        price:396,
+        basePrice:330,
+        tax:66,
+        usd:"$1.40"
+    },
+    {
+        id:3,
+        name:"200 Robux",
+        category:"roblox",
+        image:"robuxs.png",
+        description:"Roblox Robux package",
+        price:792,
+        basePrice:660,
+        tax:132,
+        usd:"$2.80"
+    },
+    {
+        id:4,
+        name:"300 Robux",
+        category:"roblox",
+        image:"robuxs.png",
+        description:"Roblox Robux package",
+        price:1188,
+        basePrice:990,
+        tax:198,
+        usd:"$4.20"
+    },
+    {
+        id:5,
+        name:"500 Robux",
+        category:"roblox",
+        image:"robuxs.png",
+        description:"Roblox Robux package",
+        price:1980,
+        basePrice:1650,
+        tax:330,
+        usd:"$7.00"
+    },
+    {
+        id:6,
+        name:"1000 Robux",
+        category:"roblox",
+        image:"robuxs.png",
+        description:"Roblox Robux package",
+        price:3960,
+        basePrice:3300,
+        tax:660,
+        usd:"$14.01"
+    },
 
-    {id:7,name:"Minecraft Pocket Edition",category:"minecraft",image:"mcpocket.png",description:"Minecraft PE for Android",price:300,usd:"$1.06"},
-    {id:8,name:"Minecraft Java Edition",category:"minecraft",image:"mcjava.png",description:"Minecraft Java Edition",price:0,usd:"Coming Soon",comingSoon:true},
-    {id:9,name:"Minecraft Dungeons",category:"minecraft",image:"mcdouengen.png",description:"Minecraft Dungeons",price:0,usd:"Coming Soon",comingSoon:true},
+    {
+        id:7,
+        name:"Minecraft Pocket Edition — Android",
+        category:"minecraft",
+        image:"mcpocket.png",
+        description:"Minecraft Pocket Edition for Android",
+        price:300,
+        basePrice:240,
+        tax:60,
+        usd:"$1.06"
+    },
 
-    {id:10,name:"Free Fire Diamonds",category:"freefire",image:"diamonds.png",description:"Free Fire diamond top-up",price:0,usd:"Price Soon",comingSoon:true},
-    {id:11,name:"Weekly Membership",category:"freefire",image:"weeklymembership.png",description:"Free Fire weekly membership",price:0,usd:"Price Soon",comingSoon:true},
-    {id:12,name:"Monthly Membership",category:"freefire",image:"monthlymembership.png",description:"Free Fire monthly membership",price:0,usd:"Price Soon",comingSoon:true},
-    {id:13,name:"Level Pass",category:"freefire",image:"levelpass.png",description:"Free Fire level pass",price:0,usd:"Price Soon",comingSoon:true}
+    {
+        id:8,
+        name:"Minecraft Java Edition",
+        category:"minecraft",
+        image:"mcjava.png",
+        description:"Minecraft Java Edition",
+        price:0,
+        basePrice:0,
+        tax:0,
+        usd:"Coming Soon",
+        comingSoon:true
+    },
+    {
+        id:9,
+        name:"Minecraft Dungeons",
+        category:"minecraft",
+        image:"mcdungeons.png",
+        description:"Minecraft Dungeons",
+        price:0,
+        basePrice:0,
+        tax:0,
+        usd:"Coming Soon",
+        comingSoon:true
+    },
+
+    {
+        id:10,
+        name:"Free Fire Diamonds",
+        category:"freefire",
+        image:"diamonds.png",
+        description:"Free Fire diamond top-up",
+        price:0,
+        basePrice:0,
+        tax:0,
+        usd:"Price Soon",
+        comingSoon:true
+    },
+    {
+        id:11,
+        name:"Weekly Membership",
+        category:"freefire",
+        image:"weeklymembership.png",
+        description:"Free Fire weekly membership",
+        price:0,
+        basePrice:0,
+        tax:0,
+        usd:"Price Soon",
+        comingSoon:true
+    },
+    {
+        id:12,
+        name:"Monthly Membership",
+        category:"freefire",
+        image:"monthlymembership.png",
+        description:"Free Fire monthly membership",
+        price:0,
+        basePrice:0,
+        tax:0,
+        usd:"Price Soon",
+        comingSoon:true
+    },
+    {
+        id:13,
+        name:"Level Pass",
+        category:"freefire",
+        image:"levelpass.png",
+        description:"Free Fire level pass",
+        price:0,
+        basePrice:0,
+        tax:0,
+        usd:"Price Soon",
+        comingSoon:true
+    }
 ];
 
 let cart = [];
+let appliedCoupon = null;
+let orderMessagePending = "";
 
+
+/* RENDER PRODUCTS */
 function renderProducts(category="all") {
     const container = document.getElementById("products");
 
@@ -497,10 +828,12 @@ function renderProducts(category="all") {
 
     container.innerHTML = filtered.map(product => `
         <div class="product-card">
-            <img src="${product.image}"
-                 class="product-image"
-                 alt="${product.name}"
-                 onerror="this.style.display='none'">
+            <img
+                src="${product.image}"
+                class="product-image"
+                alt="${product.name}"
+                onerror="this.style.display='none'"
+            >
 
             <div class="product-info">
                 <h3>${product.name}</h3>
@@ -508,14 +841,18 @@ function renderProducts(category="all") {
 
                 <div class="price">
                     <strong>
-                        ${product.comingSoon ? "Coming Soon" : product.price.toLocaleString()+" PKR"}
+                        ${product.comingSoon
+                            ? "Coming Soon"
+                            : product.price.toLocaleString()+" PKR"}
                     </strong>
                     <small>${product.usd}</small>
                 </div>
 
-                <button class="buy-btn"
+                <button
+                    class="buy-btn"
                     ${product.comingSoon ? "disabled" : ""}
-                    onclick="addToCart(${product.id})">
+                    onclick="addToCart(${product.id})"
+                >
                     ${product.comingSoon ? "Coming Soon" : "Add to Cart"}
                 </button>
             </div>
@@ -523,6 +860,8 @@ function renderProducts(category="all") {
     `).join("");
 }
 
+
+/* FILTER PRODUCTS */
 function filterProducts(category,button) {
     document.querySelectorAll(".category-btn").forEach(btn => {
         btn.classList.remove("active");
@@ -532,8 +871,11 @@ function filterProducts(category,button) {
     renderProducts(category);
 }
 
+
+/* CART */
 function addToCart(id) {
     const product = productsData.find(item => item.id === id);
+
     if (!product || product.comingSoon) return;
 
     const existing = cart.find(item => item.id === id);
@@ -549,6 +891,7 @@ function addToCart(id) {
 
 function changeQuantity(id,change) {
     const item = cart.find(product => product.id === id);
+
     if (!item) return;
 
     item.quantity += change;
@@ -565,6 +908,110 @@ function removeFromCart(id) {
     updateCart();
 }
 
+function money(value) {
+    return Math.round(value).toLocaleString() + " PKR";
+}
+
+
+/* TOTALS
+   Product price already includes tax.
+   Coupon applies to the final listed price.
+*/
+function getCartTotals() {
+    const subtotal = cart.reduce(
+        (sum,item) => sum + item.basePrice * item.quantity,0
+    );
+
+    const tax = cart.reduce(
+        (sum,item) => sum + item.tax * item.quantity,0
+    );
+
+    const finalBeforeDiscount = subtotal + tax;
+
+    const discount = appliedCoupon
+        ? Math.round(finalBeforeDiscount * appliedCoupon.discount / 100)
+        : 0;
+
+    const total = Math.max(0,finalBeforeDiscount - discount);
+
+    return {
+        subtotal,
+        tax,
+        discount,
+        finalBeforeDiscount,
+        total
+    };
+}
+
+
+/* CART DISPLAY */
+function updateCart() {
+    const count = cart.reduce((sum,item) => sum + item.quantity,0);
+
+    document.getElementById("cartCount").textContent = count;
+
+    const cartItems = document.getElementById("cartItems");
+
+    if (cart.length === 0) {
+        cartItems.innerHTML =
+            `<div class="cart-empty">Your cart is empty.</div>`;
+    } else {
+        cartItems.innerHTML = cart.map(item => {
+            const base = item.basePrice * item.quantity;
+            const tax = item.tax * item.quantity;
+            const final = item.price * item.quantity;
+
+            return `
+                <div class="cart-item">
+                    <div>
+                        <div class="cart-item-name">${item.name}</div>
+
+                        <div class="cart-item-price">
+                            Price: ${money(base)}<br>
+                            Tax: ${money(tax)}<br>
+                            Final Price: ${money(final)}
+                        </div>
+
+                        <button class="remove-btn" onclick="removeFromCart(${item.id})">
+                            Remove
+                        </button>
+                    </div>
+
+                    <div class="quantity-controls">
+                        <button onclick="changeQuantity(${item.id},-1)">−</button>
+                        <span>${item.quantity}</span>
+                        <button onclick="changeQuantity(${item.id},1)">+</button>
+                    </div>
+                </div>
+            `;
+        }).join("");
+    }
+
+    updateGameFields();
+    updateCartTotals();
+}
+
+function updateCartTotals() {
+    const totals = getCartTotals();
+
+    document.getElementById("cartSubtotal").textContent =
+        money(totals.subtotal);
+
+    document.getElementById("cartTax").textContent =
+        money(totals.tax);
+
+    document.getElementById("cartDiscount").textContent =
+        "-" + money(totals.discount);
+
+    document.getElementById("cartTotal").textContent =
+        money(totals.total);
+
+    document.getElementById("discountRow").style.display =
+        appliedCoupon && totals.discount > 0 ? "flex" : "none";
+}
+
+
+/* SHOW GAME FIELDS WHEN NEEDED */
 function updateGameFields() {
     const hasCategory = category =>
         cart.some(item => item.category === category);
@@ -587,46 +1034,188 @@ function updateGameFields() {
     });
 }
 
-function updateCart() {
-    const count = cart.reduce((sum,item) => sum+item.quantity,0);
-    document.getElementById("cartCount").textContent = count;
 
-    const cartItems = document.getElementById("cartItems");
+/* COUPON */
+function applyCoupon() {
+    const code = document.getElementById("couponInput")
+        .value.trim().toUpperCase();
 
-    if (cart.length === 0) {
-        cartItems.innerHTML =
-            `<div class="cart-empty">Your cart is empty.</div>`;
+    const message = document.getElementById("couponMessage");
+
+    if (
+        Object.prototype.hasOwnProperty.call(PROMO_CODES,code) &&
+        code
+    ) {
+        appliedCoupon = {
+            code:code,
+            discount:PROMO_CODES[code]
+        };
+
+        message.textContent = "Coupon applied successfully!";
+        message.className = "coupon-message success";
     } else {
-        cartItems.innerHTML = cart.map(item => `
-            <div class="cart-item">
-                <div>
-                    <div class="cart-item-name">${item.name}</div>
-                    <div class="cart-item-price">
-                        ${item.price.toLocaleString()} PKR each
-                    </div>
-                    <button class="remove-btn"
-                        onclick="removeFromCart(${item.id})">Remove</button>
-                </div>
+        appliedCoupon = null;
 
-                <div class="quantity-controls">
-                    <button onclick="changeQuantity(${item.id},-1)">−</button>
-                    <span>${item.quantity}</span>
-                    <button onclick="changeQuantity(${item.id},1)">+</button>
-                </div>
-            </div>
-        `).join("");
+        message.textContent = "Invalid coupon code.";
+        message.className = "coupon-message error";
     }
 
-    const total = cart.reduce(
-        (sum,item) => sum+item.price*item.quantity,0
-    );
-
-    document.getElementById("cartTotal").textContent =
-        total.toLocaleString()+" PKR";
-
-    updateGameFields();
+    updateCartTotals();
 }
 
+
+/* ORDER DETAILS */
+function buildOrderMessage() {
+    const name = document.getElementById("customerName").value.trim();
+    const email = document.getElementById("customerEmail").value.trim();
+    const username = document.getElementById("customerUsername").value.trim();
+
+    const totals = getCartTotals();
+
+    let message = "SHARDEX STORE - ORDER DETAILS\n\n";
+
+    message += `Name: ${name}\n`;
+    message += `Email: ${email}\n`;
+    message += `Username: ${username}\n`;
+
+    if (cart.some(item => item.category === "minecraft")) {
+        message += `Gamertag: ${document.getElementById("minecraftGamertag").value.trim()}\n`;
+    }
+
+    if (cart.some(item => item.category === "freefire")) {
+        message += `UID: ${document.getElementById("freeFireUID").value.trim()}\n`;
+    }
+
+    if (cart.some(item => item.category === "roblox")) {
+        message += `Roblox Username: ${document.getElementById("robloxUsername").value.trim()}\n`;
+    }
+
+    message += "\nOrder:\n";
+
+    cart.forEach(item => {
+        const base = item.basePrice * item.quantity;
+        const tax = item.tax * item.quantity;
+        const final = item.price * item.quantity;
+
+        message += `${item.name} × ${item.quantity}\n`;
+        message += `Price: ${money(base)} | Tax: ${money(tax)} | Final: ${money(final)}\n`;
+    });
+
+    message += `\nSubtotal: ${money(totals.subtotal)}\n`;
+    message += `Tax: ${money(totals.tax)}\n`;
+
+    if (appliedCoupon && totals.discount > 0) {
+        message += `Coupon: ${appliedCoupon.code} (${appliedCoupon.discount}% off)\n`;
+        message += `Discount: -${money(totals.discount)}\n`;
+    }
+
+    message += `\nFINAL TOTAL: ${money(totals.total)}`;
+
+    return message;
+}
+
+
+/* CHECKOUT */
+function checkout() {
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    const nameInput = document.getElementById("customerName");
+    const emailInput = document.getElementById("customerEmail");
+    const usernameInput = document.getElementById("customerUsername");
+
+    if (!nameInput.value.trim()) {
+        alert("Please enter your name.");
+        nameInput.focus();
+        return;
+    }
+
+    if (!emailInput.value.trim() || !emailInput.checkValidity()) {
+        alert("Please enter a valid email address.");
+        emailInput.focus();
+        return;
+    }
+
+    if (!usernameInput.value.trim()) {
+        alert("Please enter your username.");
+        usernameInput.focus();
+        return;
+    }
+
+    const fields = [
+        ["freefire","freeFireUID","Please enter your Free Fire UID."],
+        ["roblox","robloxUsername","Please enter your Roblox username."],
+        ["minecraft","minecraftGamertag","Please enter your Minecraft Gamertag."]
+    ];
+
+    for (const [category,inputId,errorMessage] of fields) {
+        if (cart.some(item => item.category === category)) {
+            const input = document.getElementById(inputId);
+
+            if (!input.value.trim()) {
+                alert(errorMessage);
+                input.focus();
+                return;
+            }
+        }
+    }
+
+    orderMessagePending = buildOrderMessage();
+
+    document.getElementById("orderPreview").textContent =
+        orderMessagePending;
+
+    document.getElementById("orderModal").classList.add("show");
+}
+
+
+/* COPY DETAILS THEN OPEN WHATSAPP */
+function closeOrderModal() {
+    document.getElementById("orderModal").classList.remove("show");
+}
+
+async function copyAndContinue() {
+    let copied = false;
+
+    try {
+        await navigator.clipboard.writeText(orderMessagePending);
+        copied = true;
+    } catch (error) {
+        const temp = document.createElement("textarea");
+
+        temp.value = orderMessagePending;
+        temp.style.position = "fixed";
+        temp.style.opacity = "0";
+
+        document.body.appendChild(temp);
+        temp.select();
+
+        copied = document.execCommand("copy");
+        temp.remove();
+    }
+
+    if (!copied) {
+        alert("Copy failed. Please manually copy the order details.");
+        return;
+    }
+
+    if (!WHATSAPP_NUMBER || !/^\d{10,15}$/.test(WHATSAPP_NUMBER)) {
+        alert("Order details copied! Set your WhatsApp number in the HTML.");
+        closeOrderModal();
+        return;
+    }
+
+    const url =
+        `https://wa.me/${923343498141}?text=${encodeURIComponent(orderMessagePending)}`;
+
+    window.open(url,"_blank");
+    closeOrderModal();
+}
+
+
+/* MODAL CONTROLS */
 function openCart() {
     document.getElementById("cartOverlay").classList.add("show");
 }
@@ -641,87 +1230,8 @@ function overlayClick(event) {
     }
 }
 
-function checkout() {
-    if (cart.length === 0) {
-        alert("Your cart is empty!");
-        return;
-    }
 
-    if (!WHATSAPP_NUMBER) {
-        alert("Please add your WhatsApp number in the HTML code first.");
-        return;
-    }
-
-    const emailInput = document.getElementById("customerEmail");
-    const email = emailInput.value.trim();
-    const username = document.getElementById("customerUsername").value.trim();
-
-    if (!email || !emailInput.checkValidity()) {
-        alert("Please enter a valid email address.");
-        emailInput.focus();
-        return;
-    }
-
-    if (!username) {
-        alert("Please enter your username.");
-        document.getElementById("customerUsername").focus();
-        return;
-    }
-
-    const gameFields = [
-        ["freefire","freeFireUID","Please enter your Free Fire UID."],
-        ["roblox","robloxUsername","Please enter your Roblox username."],
-        ["minecraft","minecraftGamertag","Please enter your Minecraft Gamertag."]
-    ];
-
-    for (const [category,inputId,errorMessage] of gameFields) {
-        if (cart.some(item => item.category === category)) {
-            const input = document.getElementById(inputId);
-
-            if (!input.value.trim()) {
-                alert(errorMessage);
-                input.focus();
-                return;
-            }
-        }
-    }
-
-    let message =
-        "Hello Shardex Store! I want to place an order:\n\n";
-
-    message += `Email: ${email}\n`;
-    message += `Username: ${username}\n`;
-
-    if (cart.some(item => item.category === "freefire")) {
-        message += `Free Fire UID: ${document.getElementById("freeFireUID").value.trim()}\n`;
-    }
-
-    if (cart.some(item => item.category === "roblox")) {
-        message += `Roblox Username: ${document.getElementById("robloxUsername").value.trim()}\n`;
-    }
-
-    if (cart.some(item => item.category === "minecraft")) {
-        message += `Minecraft Gamertag: ${document.getElementById("minecraftGamertag").value.trim()}\n`;
-    }
-
-    message += "\nOrder Items:\n";
-
-    cart.forEach(item => {
-        message += `${item.name} x ${item.quantity} = ${(item.price*item.quantity).toLocaleString()} PKR\n`;
-    });
-
-    const total = cart.reduce(
-        (sum,item) => sum+item.price*item.quantity,0
-    );
-
-    message += `\nTotal: ${total.toLocaleString()} PKR`;
-
-    const url =
-        `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-
-    window.open(url,"_blank");
-}
-
+/* START */
 renderProducts();
 updateCart();
 </script>
