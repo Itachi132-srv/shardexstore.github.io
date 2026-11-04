@@ -9,13 +9,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Poppins:wght@400;500;600;700&display=swap');
 
 :root {
-    --bg:#08080d;
-    --card:#14121d;
+    --bg:#07060b;
+    --card:#120e1f;
     --purple:#8b5cf6;
+    --neon-purple: #a855f7;
+    --neon-blue: #3b82f6;
+    --neon-glow: linear-gradient(135deg, rgba(168,85,247,0.2) 0%, rgba(59,130,246,0.2) 100%);
+    --gradient-btn: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+    --gradient-neon: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
     --light:#c4aaff;
     --text:#f5f3ff;
     --muted:#9993aa;
-    --border:#2b2639;
+    --border:#271f38;
 }
 
 * {
@@ -28,14 +33,17 @@ body {
     background:var(--bg);
     color:var(--text);
     font-family:'Poppins',sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 header {
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:20px 7%;
-    background:#0d0c13;
+    padding:18px 7%;
+    background:#0b0914;
     border-bottom:1px solid var(--border);
     position:sticky;
     top:0;
@@ -45,20 +53,16 @@ header {
 .logo {
     font:800 22px 'Orbitron',sans-serif;
     color:var(--light);
+    cursor: pointer;
+    text-shadow: 0 0 12px rgba(168,85,247,0.4);
 }
 
 .logo span {color:white;}
 
-nav {
+.header-right {
     display:flex;
     align-items:center;
-    gap:20px;
-}
-
-nav a {
-    color:#c8c1d9;
-    text-decoration:none;
-    font-size:14px;
+    gap:14px;
 }
 
 button {
@@ -66,75 +70,196 @@ button {
     font-family:inherit;
 }
 
-.cart-open,.hero-button {
-    background:var(--purple);
+.auth-btn, .cart-open {
+    background: var(--gradient-btn);
     color:white;
     border:0;
     border-radius:9px;
-    padding:11px 17px;
+    padding:10px 16px;
     font-weight:600;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(139,92,246,0.2);
 }
 
+.auth-btn:hover, .cart-open:hover {
+    box-shadow: 0 0 15px rgba(168,85,247,0.5);
+    transform: translateY(-1px);
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(139,92,246,0.15);
+    border: 1px solid var(--purple);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--light);
+}
+
+.page {
+    display: none;
+    flex: 1;
+}
+
+.page.active {
+    display: block;
+}
+
+/* TOP BACK BAR */
+.back-bar {
+    padding: 15px 7% 0;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--light);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.back-btn:hover {
+    background: var(--card);
+    border-color: var(--purple);
+}
+
+/* HOME PAGE */
 .hero {
     text-align:center;
-    padding:85px 20px 65px;
-    background:radial-gradient(ellipse at top,#29174d,transparent 65%);
+    padding:90px 20px;
+    background:radial-gradient(circle at center, rgba(139,92,246,0.15) 0%, transparent 70%);
 }
 
 .hero h1 {
-    font:800 clamp(34px,6vw,62px)/1.25 'Orbitron',sans-serif;
+    font:800 clamp(34px,6vw,58px)/1.25 'Orbitron',sans-serif;
     margin-bottom:18px;
+    background: linear-gradient(180deg, #ffffff 0%, #c4aaff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
-
-.hero h1 span {color:var(--light);}
 
 .hero p {
     max-width:600px;
     margin:auto;
     color:var(--muted);
-    font-size:14px;
+    font-size:15px;
 }
 
-.hero-button {
-    display:inline-block;
-    text-decoration:none;
-    margin-top:28px;
+.home-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 35px;
+    flex-wrap: wrap;
 }
 
-.section {padding:45px 7%;}
+.action-btn {
+    padding: 14px 28px;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 10px;
+    border: 1px solid var(--purple);
+    background: var(--gradient-neon);
+    color: white;
+    box-shadow: 0 0 20px rgba(168,85,247,0.3);
+    transition: all 0.3s ease;
+}
+
+.action-btn.secondary {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--light);
+    box-shadow: none;
+}
+
+.action-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 25px rgba(168,85,247,0.6);
+}
+
+.action-btn.secondary:hover {
+    border-color: var(--purple);
+    background: rgba(139,92,246,0.1);
+}
+
+/* STORE / CATEGORY SELECTION */
+.section {padding:40px 7%;}
 
 .section h2 {
-    font:700 26px 'Orbitron',sans-serif;
-    margin-bottom:10px;
+    font:700 28px 'Orbitron',sans-serif;
+    margin-bottom:8px;
+    background: linear-gradient(90deg, #fff, #c4aaff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .subtitle {
     color:var(--muted);
     font-size:14px;
-    margin-bottom:25px;
+    margin-bottom:30px;
 }
 
-.categories {
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-bottom:25px;
+.store-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
 }
 
-.category-btn {
-    border:1px solid var(--border);
-    border-radius:8px;
-    background:var(--card);
-    color:#d5cfe5;
-    padding:10px 17px;
+.game-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-image: var(--neon-glow);
+    position: relative;
+    overflow: hidden;
 }
 
-.category-btn.active,.category-btn:hover {
-    background:var(--purple);
-    border-color:var(--purple);
-    color:white;
+.game-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(168,85,247,0.5), transparent);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
 }
 
+.game-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 30px rgba(168,85,247,0.25);
+    border-color: var(--neon-purple);
+}
+
+.game-card img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 0 10px rgba(168,85,247,0.4));
+}
+
+.game-card h3 {
+    font: 700 20px 'Orbitron', sans-serif;
+    margin-bottom: 8px;
+}
+
+/* PRODUCT LIST */
 .products {
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -146,12 +271,13 @@ button {
     background:var(--card);
     border-radius:14px;
     overflow:hidden;
-    transition:.2s;
+    transition:.3s;
 }
 
 .product-card:hover {
-    border-color:var(--purple);
-    transform:translateY(-3px);
+    border-color:var(--neon-purple);
+    transform:translateY(-4px);
+    box-shadow: 0 5px 20px rgba(168,85,247,0.2);
 }
 
 .product-image {
@@ -159,8 +285,9 @@ button {
     aspect-ratio:1/1;
     object-fit:contain;
     display:block;
-    background:#0d0b14;
+    background:#090710;
     border-radius:14px 14px 0 0;
+    padding: 15px;
 }
 
 .product-info {padding:18px;}
@@ -192,15 +319,17 @@ button {
     width:100%;
     border:0;
     border-radius:8px;
-    background:var(--purple);
+    background:var(--gradient-btn);
     color:white;
     padding:11px;
     font-weight:600;
+    box-shadow: 0 0 10px rgba(139,92,246,0.3);
 }
 
 .buy-btn:disabled {
     background:#393344;
     color:#aaa2ba;
+    box-shadow: none;
     cursor:not-allowed;
 }
 
@@ -210,41 +339,46 @@ footer {
     padding:28px 15px;
     border-top:1px solid var(--border);
     font-size:13px;
+    margin-top: auto;
 }
 
-/* CART */
-.cart-overlay {
+/* CART & MODALS */
+.cart-overlay, .auth-modal, .orders-modal, .order-modal, .success-modal {
     display:none;
     position:fixed;
     inset:0;
     z-index:100;
-    background:#000b;
+    background:rgba(0,0,0,0.85);
+    backdrop-filter: blur(5px);
     align-items:center;
     justify-content:center;
     padding:15px;
 }
 
-.cart-overlay.show {display:flex;}
+.cart-overlay.show, .auth-modal.show, .orders-modal.show, .order-modal.show, .success-modal.show {
+    display:flex;
+}
 
-.cart-box {
+.cart-box, .auth-box, .orders-modal-box, .order-modal-box, .success-box {
     width:100%;
     max-width:480px;
     max-height:90vh;
     overflow-y:auto;
-    background:#14121d;
+    background:#120e1f;
     border:1px solid var(--border);
-    border-radius:15px;
-    padding:22px;
+    border-radius:16px;
+    padding:24px;
+    box-shadow: 0 0 30px rgba(139,92,246,0.25);
 }
 
-.cart-header {
+.cart-header, .orders-head {
     display:flex;
     align-items:center;
     justify-content:space-between;
     margin-bottom:15px;
 }
 
-.cart-header h2 {
+.cart-header h2, .orders-head h2 {
     font:700 22px 'Orbitron',sans-serif;
 }
 
@@ -288,7 +422,7 @@ footer {
 }
 
 .quantity-controls button {
-    background:#302640;
+    background:#2b223c;
     color:white;
     border:0;
     border-radius:5px;
@@ -338,10 +472,10 @@ footer {
     margin:16px 0;
 }
 
-.coupon-area input {
+.coupon-area input, .auth-box input, .customer-details input {
     min-width:0;
     flex:1;
-    background:#0d0b14;
+    background:#08060d;
     color:white;
     border:1px solid var(--border);
     border-radius:8px;
@@ -350,56 +484,37 @@ footer {
     font-size:13px;
 }
 
-.coupon-area button {
-    background:var(--purple);
+.coupon-area input:focus, .auth-box input:focus, .customer-details input:focus {
+    outline: none;
+    border-color: var(--purple);
+}
+
+.coupon-area button, .auth-submit-btn {
+    background:var(--gradient-btn);
     color:white;
     border:0;
     border-radius:8px;
-    padding:0 14px;
+    padding:0 16px;
     font-weight:600;
 }
 
-.coupon-message {
-    font-size:12px;
-    margin-top:-8px;
-    margin-bottom:12px;
+.auth-submit-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
 }
 
-.coupon-message.success {color:#72e5a1;}
-.coupon-message.error {color:#ff8585;}
-
-/* CUSTOMER DETAILS */
 .customer-details {
     margin:20px 0;
     display:grid;
     gap:13px;
 }
 
-.customer-details h3 {
-    font:600 16px 'Orbitron',sans-serif;
-}
-
-.customer-details label {
+.customer-details label, .auth-box label {
     display:block;
     color:#c8c1d9;
     font-size:12px;
     margin-bottom:6px;
-}
-
-.customer-details input {
-    width:100%;
-    background:#0d0b14;
-    color:white;
-    border:1px solid var(--border);
-    border-radius:8px;
-    padding:12px;
-    outline:none;
-    font:inherit;
-    font-size:13px;
-}
-
-.customer-details input:focus {
-    border-color:var(--purple);
 }
 
 .game-field {display:none;}
@@ -414,38 +529,90 @@ footer {
     font-weight:700;
 }
 
+/* ORDER HISTORY */
+.orders-list {display:grid;gap:13px;}
+.order-card {border:1px solid var(--border);background:#090710;border-radius:10px;padding:15px;}
+.order-card h3 {font-size:15px;margin-bottom:7px;}
+.order-card p {font-size:12px;color:var(--muted);line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere;}
+.order-status {display:inline-block;margin:8px 0;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:700;background:#44331a;color:#ffd88a;}
+.order-status.received {background:#153b2b;color:#85efb0;}
+.received-btn,.review-submit,.place-order-btn {width:100%;border:0;border-radius:8px;padding:12px;font-weight:700;margin-top:10px;}
+.received-btn,.place-order-btn {background:#25d366;color:#07150b;}
+.review-submit {background:var(--gradient-btn);color:white;}
+.review-form {display:none;margin-top:12px;border-top:1px solid var(--border);padding-top:13px;}
+.review-form.show {display:block;}
+.star-rating {display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:5px;}
+.star-rating input {position:absolute;opacity:0;}
+.star-rating label {font-size:30px;color:#51485f;cursor:pointer;margin:0;}
+.star-rating input:checked ~ label,.star-rating label:hover,.star-rating label:hover ~ label {color:#ffc857;}
+.review-form textarea {width:100%;min-height:90px;resize:vertical;background:#08060d;color:white;border:1px solid var(--border);border-radius:8px;padding:10px;font:inherit;font-size:13px;}
+.review-text {margin-top:8px;color:#d8c8ff!important;background: rgba(139,92,246,0.1);padding: 8px;border-radius: 6px;}
+
+/* COOL TICK ANIMATION POPUP */
+.success-box {
+    text-align: center;
+    padding: 35px 20px;
+}
+
+.success-box h3 {
+    font: 700 22px 'Orbitron', sans-serif;
+    margin-top: 15px;
+    color: white;
+}
+
+.success-box p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.checkmark-wrapper {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+}
+
+.checkmark {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 3;
+    stroke: #25d366;
+    stroke-miterlimit: 10;
+    box-shadow: inset 0px 0px 0px #25d366;
+    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+}
+
+.checkmark-circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 3;
+    stroke-miterlimit: 10;
+    stroke: #25d366;
+    fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark-check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke { 100% { stroke-dashoffset: 0; } }
+@keyframes scale { 0%, 100% { transform: none; } 50% { transform: scale3d(1.1, 1.1, 1); } }
+@keyframes fill { 100% { box-shadow: inset 0px 0px 0px 30px rgba(37, 211, 102, 0.1); } }
+
 /* ORDER POPUP */
-.order-modal {
-    display:none;
-    position:fixed;
-    inset:0;
-    z-index:200;
-    background:#000c;
-    align-items:center;
-    justify-content:center;
-    padding:15px;
-}
-
-.order-modal.show {display:flex;}
-
-.order-modal-box {
-    width:100%;
-    max-width:500px;
-    max-height:90vh;
-    overflow-y:auto;
-    background:#14121d;
-    border:1px solid var(--border);
-    border-radius:15px;
-    padding:22px;
-}
-
 .order-modal-box h2 {
     font:700 20px 'Orbitron',sans-serif;
     margin-bottom:12px;
 }
 
 .order-preview {
-    background:#0b0a11;
+    background:#08060d;
     border:1px solid var(--border);
     border-radius:9px;
     padding:14px;
@@ -457,10 +624,7 @@ footer {
     margin-bottom:14px;
 }
 
-.order-modal-actions {
-    display:grid;
-    gap:9px;
-}
+.order-modal-actions {display:grid;gap:9px;}
 
 .copy-continue {
     width:100%;
@@ -484,18 +648,12 @@ footer {
 @media(max-width:650px) {
     header {padding:16px 5%;}
     .logo {font-size:17px;}
-    nav a {display:none;}
     .hero {padding:65px 18px 50px;}
     .section {padding:35px 5%;}
     .products {
         grid-template-columns:repeat(2,minmax(0,1fr));
         gap:12px;
     }
-    .product-info {padding:12px;}
-    .product-card h3 {font-size:13px;}
-    .product-card p {font-size:11px;}
-    .price strong {font-size:16px;}
-    .buy-btn {font-size:12px;}
 }
 </style>
 </head>
@@ -503,37 +661,94 @@ footer {
 <body>
 
 <header>
-    <div class="logo">SHARDEX <span>STORE</span></div>
-    <nav>
-        <a href="#home">Home</a>
-        <a href="#store">Store</a>
+    <div class="logo" onclick="navigateTo('home')">SHARDEX <span>STORE</span></div>
+    <div class="header-right">
+        <div id="userInfoDisplay"></div>
         <button class="cart-open" onclick="openCart()">
             Cart (<span id="cartCount">0</span>)
         </button>
-    </nav>
+    </div>
 </header>
 
-<section class="hero" id="home">
-    <h1>WELCOME TO<br><span>SHARDEX STORE</span></h1>
-    <p>Gaming products, digital items and top-ups in one place.</p>
-    <a class="hero-button" href="#store">Explore Store</a>
-</section>
+<!-- HOME PAGE -->
+<main id="homePage" class="page active">
+    <section class="hero">
+        <h1>WELCOME TO<br><span>SHARDEX STORE</span></h1>
+        <p>Gaming products, digital items and top-ups in one place.</p>
+        <div class="home-buttons">
+            <button class="action-btn" onclick="navigateTo('store')">Explore Store</button>
+            <button class="action-btn secondary" onclick="openOrders()">Order History</button>
+        </div>
+    </section>
+</main>
 
-<section class="section" id="store">
-    <h2>Our Products</h2>
-    <p class="subtitle">Select a category and choose your product.</p>
-
-    <div class="categories">
-        <button class="category-btn active" onclick="filterProducts('all',this)">All</button>
-        <button class="category-btn" onclick="filterProducts('roblox',this)">Roblox</button>
-        <button class="category-btn" onclick="filterProducts('freefire',this)">Free Fire</button>
-        <button class="category-btn" onclick="filterProducts('minecraft',this)">Minecraft</button>
+<!-- MAIN STORE PAGE (3 CARDS) -->
+<main id="storePage" class="page">
+    <div class="back-bar">
+        <button class="back-btn" onclick="navigateTo('home')">← Back to Home</button>
     </div>
+    <section class="section">
+        <h2>Choose Game Category</h2>
+        <p class="subtitle">Select a category to view products.</p>
+        
+        <div class="store-grid">
+            <div class="game-card" onclick="openCategory('minecraft')">
+                <img src="mcpocket.png" alt="Minecraft" onerror="this.src='https://via.placeholder.com/100?text=Minecraft'">
+                <h3>Minecraft</h3>
+                <p style="font-size:12px;color:var(--muted)">Pocket Edition, Java & Dungeons</p>
+            </div>
+            
+            <div class="game-card" onclick="openCategory('roblox')">
+                <img src="robuxs.png" alt="Roblox" onerror="this.src='https://via.placeholder.com/100?text=Roblox'">
+                <h3>Roblox</h3>
+                <p style="font-size:12px;color:var(--muted)">Robux Packages & Top-ups</p>
+            </div>
+            
+            <div class="game-card" onclick="openCategory('freefire')">
+                <img src="diamonds.png" alt="Free Fire" onerror="this.src='https://via.placeholder.com/100?text=Free+Fire'">
+                <h3>Free Fire</h3>
+                <p style="font-size:12px;color:var(--muted)">Diamonds, Passes & Memberships</p>
+            </div>
+        </div>
+    </section>
+</main>
 
-    <div class="products" id="products"></div>
-</section>
+<!-- DEDICATED PRODUCTS PAGE -->
+<main id="categoryPage" class="page">
+    <div class="back-bar">
+        <button class="back-btn" onclick="navigateTo('store')">← Back to Categories</button>
+    </div>
+    <section class="section">
+        <h2 id="categoryTitle">Products</h2>
+        <p class="subtitle">Choose your desired product.</p>
+        <div class="products" id="products"></div>
+    </section>
+</main>
 
 <footer>© 2026 Shardex Store. All rights reserved.</footer>
+
+<!-- AUTH (LOGIN/SIGNUP) MODAL -->
+<div class="auth-modal" id="authModal">
+    <div class="auth-box">
+        <div class="orders-head">
+            <h2 id="authTitle">Account Login</h2>
+            <button class="close-cart" onclick="closeAuth()">×</button>
+        </div>
+        <form onsubmit="handleAuthSubmit(event)">
+            <div style="display:grid;gap:12px;">
+                <div>
+                    <label for="authUsername">Username *</label>
+                    <input type="text" id="authUsername" placeholder="Enter username" required>
+                </div>
+                <div>
+                    <label for="authEmail">Email Address *</label>
+                    <input type="email" id="authEmail" placeholder="Enter email" required>
+                </div>
+                <button type="submit" class="auth-submit-btn">Continue & Save ID</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 <!-- CART MODAL -->
 <div class="cart-overlay" id="cartOverlay" onclick="overlayClick(event)">
@@ -550,17 +765,14 @@ footer {
                 <span>Price (before tax)</span>
                 <strong id="cartSubtotal">0 PKR</strong>
             </div>
-
             <div class="summary-row">
                 <span>Tax</span>
                 <strong id="cartTax">0 PKR</strong>
             </div>
-
             <div class="summary-row discount" id="discountRow" style="display:none">
                 <span>Coupon Discount</span>
                 <strong id="cartDiscount">-0 PKR</strong>
             </div>
-
             <div class="cart-total">
                 <span>Final Total</span>
                 <span id="cartTotal">0 PKR</span>
@@ -576,17 +788,14 @@ footer {
 
         <div class="customer-details">
             <h3>Customer Details</h3>
-
             <div>
                 <label for="customerName">Name *</label>
                 <input type="text" id="customerName" placeholder="Enter your name">
             </div>
-
             <div>
                 <label for="customerEmail">Email Address *</label>
                 <input type="email" id="customerEmail" placeholder="Enter your email">
             </div>
-
             <div>
                 <label for="customerUsername">Username *</label>
                 <input type="text" id="customerUsername" placeholder="Enter your username">
@@ -614,19 +823,20 @@ footer {
     </div>
 </div>
 
-<!-- ORDER DETAILS POPUP -->
+<!-- ORDER DETAILS CONFIRM MODAL -->
 <div class="order-modal" id="orderModal">
     <div class="order-modal-box">
         <h2>Confirm Your Order</h2>
         <p style="color:var(--muted);font-size:12px;margin-bottom:12px">
-            Copy your order details to continue. This popup stays open until copied.
+            Copy your order details to continue.
         </p>
-
         <div class="order-preview" id="orderPreview"></div>
-
         <div class="order-modal-actions">
-            <button class="copy-continue" onclick="copyAndContinue()">
+            <button class="copy-continue" id="copyDetailsButton" onclick="copyAndContinue()">
                 Copy Details &amp; Continue
+            </button>
+            <button class="place-order-btn" id="placeOrderButton" onclick="placeOrder()" style="display:none">
+                Place Order
             </button>
             <button class="cancel-order" onclick="closeOrderModal()">
                 Back to Cart
@@ -635,196 +845,156 @@ footer {
     </div>
 </div>
 
+<!-- ANIMATED TICK POPUP FOR SUCCESS -->
+<div class="success-modal" id="successModal">
+    <div class="success-box">
+        <div class="checkmark-wrapper">
+            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
+        </div>
+        <h3>Feedback Submitted!</h3>
+        <p>Your order has been marked as Received.</p>
+    </div>
+</div>
+
+<!-- ORDERS HISTORY MODAL -->
+<div class="orders-modal" id="ordersModal" onclick="ordersOverlayClick(event)">
+    <div class="orders-modal-box">
+        <div class="orders-head">
+            <h2>Your Orders</h2>
+            <button class="close-cart" onclick="closeOrders()">×</button>
+        </div>
+        <div id="ordersList" class="orders-list"></div>
+    </div>
+</div>
+
 <script>
 "use strict";
 
-/* WHATSAPP NUMBER
-   Country code ke sath number likho, + sign ke baghair.
-   Example: 923001234567
-*/
-const WHATSAPP_NUMBER = "";
+const WHATSAPP_NUMBER = "92 3208193996";
 
-
-/* COUPON CODES
-   SDX20 = 20% discount
-   Apne codes yahan add kar sakte ho.
-*/
 const PROMO_CODES = {
     "SDX20": 20
 };
 
-
-/* PRODUCT DATA
-   price = final price with tax included
-   tax = tax amount already included in final price
-*/
 const productsData = [
-    {
-        id:1,
-        name:"50 Robux",
-        category:"roblox",
-        image:"robuxs.png",
-        description:"Roblox Robux package",
-        price:198,
-        basePrice:165,
-        tax:33,
-        usd:"$0.70"
-    },
-    {
-        id:2,
-        name:"100 Robux",
-        category:"roblox",
-        image:"robuxs.png",
-        description:"Roblox Robux package",
-        price:396,
-        basePrice:330,
-        tax:66,
-        usd:"$1.40"
-    },
-    {
-        id:3,
-        name:"200 Robux",
-        category:"roblox",
-        image:"robuxs.png",
-        description:"Roblox Robux package",
-        price:792,
-        basePrice:660,
-        tax:132,
-        usd:"$2.80"
-    },
-    {
-        id:4,
-        name:"300 Robux",
-        category:"roblox",
-        image:"robuxs.png",
-        description:"Roblox Robux package",
-        price:1188,
-        basePrice:990,
-        tax:198,
-        usd:"$4.20"
-    },
-    {
-        id:5,
-        name:"500 Robux",
-        category:"roblox",
-        image:"robuxs.png",
-        description:"Roblox Robux package",
-        price:1980,
-        basePrice:1650,
-        tax:330,
-        usd:"$7.00"
-    },
-    {
-        id:6,
-        name:"1000 Robux",
-        category:"roblox",
-        image:"robuxs.png",
-        description:"Roblox Robux package",
-        price:3960,
-        basePrice:3300,
-        tax:660,
-        usd:"$14.01"
-    },
-
-    {
-        id:7,
-        name:"Minecraft Pocket Edition — Android",
-        category:"minecraft",
-        image:"mcpocket.png",
-        description:"Minecraft Pocket Edition for Android",
-        price:300,
-        basePrice:240,
-        tax:60,
-        usd:"$1.06"
-    },
-
-    {
-        id:8,
-        name:"Minecraft Java Edition",
-        category:"minecraft",
-        image:"mcjava.png",
-        description:"Minecraft Java Edition",
-        price:0,
-        basePrice:0,
-        tax:0,
-        usd:"Coming Soon",
-        comingSoon:true
-    },
-    {
-        id:9,
-        name:"Minecraft Dungeons",
-        category:"minecraft",
-        image:"mcdungeons.png",
-        description:"Minecraft Dungeons",
-        price:0,
-        basePrice:0,
-        tax:0,
-        usd:"Coming Soon",
-        comingSoon:true
-    },
-
-    {
-        id:10,
-        name:"Free Fire Diamonds",
-        category:"freefire",
-        image:"diamonds.png",
-        description:"Free Fire diamond top-up",
-        price:0,
-        basePrice:0,
-        tax:0,
-        usd:"Price Soon",
-        comingSoon:true
-    },
-    {
-        id:11,
-        name:"Weekly Membership",
-        category:"freefire",
-        image:"weeklymembership.png",
-        description:"Free Fire weekly membership",
-        price:0,
-        basePrice:0,
-        tax:0,
-        usd:"Price Soon",
-        comingSoon:true
-    },
-    {
-        id:12,
-        name:"Monthly Membership",
-        category:"freefire",
-        image:"monthlymembership.png",
-        description:"Free Fire monthly membership",
-        price:0,
-        basePrice:0,
-        tax:0,
-        usd:"Price Soon",
-        comingSoon:true
-    },
-    {
-        id:13,
-        name:"Level Pass",
-        category:"freefire",
-        image:"levelpass.png",
-        description:"Free Fire level pass",
-        price:0,
-        basePrice:0,
-        tax:0,
-        usd:"Price Soon",
-        comingSoon:true
-    }
+    { id:1, name:"50 Robux", category:"roblox", image:"robuxs.png", description:"Roblox Robux package", price:198, basePrice:165, tax:33, usd:"$0.70" },
+    { id:2, name:"100 Robux", category:"roblox", image:"robuxs.png", description:"Roblox Robux package", price:396, basePrice:330, tax:66, usd:"$1.40" },
+    { id:3, name:"200 Robux", category:"roblox", image:"robuxs.png", description:"Roblox Robux package", price:792, basePrice:660, tax:132, usd:"$2.80" },
+    { id:4, name:"300 Robux", category:"roblox", image:"robuxs.png", description:"Roblox Robux package", price:1188, basePrice:990, tax:198, usd:"$4.20" },
+    { id:5, name:"500 Robux", category:"roblox", image:"robuxs.png", description:"Roblox Robux package", price:1980, basePrice:1650, tax:330, usd:"$7.00" },
+    { id:6, name:"1000 Robux", category:"roblox", image:"robuxs.png", description:"Roblox Robux package", price:3960, basePrice:3300, tax:660, usd:"$14.01" },
+    { id:7, name:"Minecraft Pocket Edition — Android", category:"minecraft", image:"mcpocket.png", description:"Minecraft Pocket Edition for Android", price:300, basePrice:240, tax:60, usd:"$1.06" },
+    { id:8, name:"Minecraft Java Edition", category:"minecraft", image:"mcjava.png", description:"Minecraft Java Edition", price:0, basePrice:0, tax:0, usd:"Coming Soon", comingSoon:true },
+    { id:9, name:"Minecraft Dungeons", category:"minecraft", image:"mcdungeons.png", description:"Minecraft Dungeons", price:0, basePrice:0, tax:0, usd:"Coming Soon", comingSoon:true },
+    { id:10, name:"Free Fire Diamonds", category:"freefire", image:"diamonds.png", description:"Free Fire diamond top-up", price:0, basePrice:0, tax:0, usd:"Price Soon", comingSoon:true },
+    { id:11, name:"Weekly Membership", category:"freefire", image:"weeklymembership.png", description:"Free Fire weekly membership", price:0, basePrice:0, tax:0, usd:"Price Soon", comingSoon:true },
+    { id:12, name:"Monthly Membership", category:"freefire", image:"monthlymembership.png", description:"Free Fire monthly membership", price:0, basePrice:0, tax:0, usd:"Price Soon", comingSoon:true },
+    { id:13, name:"Level Pass", category:"freefire", image:"levelpass.png", description:"Free Fire level pass", price:0, basePrice:0, tax:0, usd:"Price Soon", comingSoon:true }
 ];
 
 let cart = [];
 let appliedCoupon = null;
 let orderMessagePending = "";
+let orderDraft = null;
+let currentCategory = "";
 
+// STORAGE KEYS
+const ORDERS_STORAGE_KEY = "shardexStoreOrders_v2";
+const USER_KEY = "shardexStoreUser_v1";
+
+let currentUser = loadUser();
+let orders = loadOrders();
+
+function loadUser() {
+    try {
+        return JSON.parse(localStorage.getItem(USER_KEY)) || null;
+    } catch(e) { return null; }
+}
+
+function saveUser(user) {
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
+    currentUser = user;
+    updateUserDisplay();
+}
+
+function loadOrders() {
+    try {
+        const saved = JSON.parse(localStorage.getItem(ORDERS_STORAGE_KEY) || "[]");
+        return Array.isArray(saved) ? saved : [];
+    } catch (error) { return []; }
+}
+
+function saveOrders() {
+    localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(orders));
+}
+
+function getPendingOrder() {
+    return orders.find(order => order.status === "Pending") || null;
+}
+
+/* NAVIGATION */
+function navigateTo(pageId) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById(pageId + "Page").classList.add("active");
+    window.scrollTo(0, 0);
+}
+
+function openCategory(cat) {
+    currentCategory = cat;
+    const titleMap = {
+        'minecraft': 'Minecraft Products',
+        'roblox': 'Roblox Packages',
+        'freefire': 'Free Fire Items'
+    };
+    document.getElementById("categoryTitle").textContent = titleMap[cat] || "Products";
+    renderProducts(cat);
+    navigateTo("category");
+}
+
+/* AUTHENTICATION */
+function updateUserDisplay() {
+    const container = document.getElementById("userInfoDisplay");
+    if (currentUser) {
+        container.innerHTML = `
+            <div class="user-profile">
+                <span>👤 ${escapeHtml(currentUser.username)}</span>
+            </div>
+        `;
+        document.getElementById("customerName").value = currentUser.username;
+        document.getElementById("customerEmail").value = currentUser.email;
+        document.getElementById("customerUsername").value = currentUser.username;
+    } else {
+        container.innerHTML = `
+            <button class="auth-btn" onclick="openAuth()">Login / Sign Up</button>
+        `;
+    }
+}
+
+function openAuth() {
+    document.getElementById("authModal").classList.add("show");
+}
+
+function closeAuth() {
+    document.getElementById("authModal").classList.remove("show");
+}
+
+function handleAuthSubmit(e) {
+    e.preventDefault();
+    const username = document.getElementById("authUsername").value.trim();
+    const email = document.getElementById("authEmail").value.trim();
+    if(username && email) {
+        saveUser({ username, email });
+        closeAuth();
+    }
+}
 
 /* RENDER PRODUCTS */
-function renderProducts(category="all") {
+function renderProducts(category) {
     const container = document.getElementById("products");
-
-    const filtered = category === "all"
-        ? productsData
-        : productsData.filter(product => product.category === category);
+    const filtered = productsData.filter(product => product.category === category);
 
     container.innerHTML = filtered.map(product => `
         <div class="product-card">
@@ -832,70 +1002,51 @@ function renderProducts(category="all") {
                 src="${product.image}"
                 class="product-image"
                 alt="${product.name}"
-                onerror="this.style.display='none'"
+                onerror="this.src='https://via.placeholder.com/200?text=Product'"
             >
-
             <div class="product-info">
                 <h3>${product.name}</h3>
                 <p>${product.description}</p>
-
                 <div class="price">
                     <strong>
-                        ${product.comingSoon
-                            ? "Coming Soon"
-                            : product.price.toLocaleString()+" PKR"}
+                        ${product.comingSoon ? "Coming Soon" : product.price.toLocaleString()+" PKR"}
                     </strong>
                     <small>${product.usd}</small>
                 </div>
-
                 <button
                     class="buy-btn"
-                    ${product.comingSoon ? "disabled" : ""}
+                    ${(product.comingSoon || getPendingOrder()) ? "disabled" : ""}
                     onclick="addToCart(${product.id})"
                 >
-                    ${product.comingSoon ? "Coming Soon" : "Add to Cart"}
+                    ${product.comingSoon ? "Coming Soon" : (getPendingOrder() ? "Order Pending" : "Add to Cart")}
                 </button>
             </div>
         </div>
     `).join("");
 }
 
-
-/* FILTER PRODUCTS */
-function filterProducts(category,button) {
-    document.querySelectorAll(".category-btn").forEach(btn => {
-        btn.classList.remove("active");
-    });
-
-    button.classList.add("active");
-    renderProducts(category);
-}
-
-
-/* CART */
+/* CART MANAGEMENT */
 function addToCart(id) {
     const product = productsData.find(item => item.id === id);
-
+    if (getPendingOrder()) {
+        alert("1 Order Already Placed. Please receive your pending order first.");
+        return;
+    }
     if (!product || product.comingSoon) return;
 
     const existing = cart.find(item => item.id === id);
-
     if (existing) {
         existing.quantity++;
     } else {
-        cart.push({...product,quantity:1});
+        cart.push({...product, quantity:1});
     }
-
     updateCart();
 }
 
-function changeQuantity(id,change) {
+function changeQuantity(id, change) {
     const item = cart.find(product => product.id === id);
-
     if (!item) return;
-
     item.quantity += change;
-
     if (item.quantity <= 0) {
         removeFromCart(id);
     } else {
@@ -912,49 +1063,29 @@ function money(value) {
     return Math.round(value).toLocaleString() + " PKR";
 }
 
-
-/* TOTALS
-   Product price already includes tax.
-   Coupon applies to the final listed price.
-*/
 function getCartTotals() {
-    const subtotal = cart.reduce(
-        (sum,item) => sum + item.basePrice * item.quantity,0
-    );
-
-    const tax = cart.reduce(
-        (sum,item) => sum + item.tax * item.quantity,0
-    );
-
+    const subtotal = cart.reduce((sum,item) => sum + item.basePrice * item.quantity, 0);
+    const tax = cart.reduce((sum,item) => sum + item.tax * item.quantity, 0);
     const finalBeforeDiscount = subtotal + tax;
-
-    const discount = appliedCoupon
-        ? Math.round(finalBeforeDiscount * appliedCoupon.discount / 100)
-        : 0;
-
-    const total = Math.max(0,finalBeforeDiscount - discount);
-
-    return {
-        subtotal,
-        tax,
-        discount,
-        finalBeforeDiscount,
-        total
-    };
+    const discount = appliedCoupon ? Math.round(finalBeforeDiscount * appliedCoupon.discount / 100) : 0;
+    const total = Math.max(0, finalBeforeDiscount - discount);
+    return { subtotal, tax, discount, finalBeforeDiscount, total };
 }
 
-
-/* CART DISPLAY */
 function updateCart() {
-    const count = cart.reduce((sum,item) => sum + item.quantity,0);
-
+    const count = cart.reduce((sum,item) => sum + item.quantity, 0);
     document.getElementById("cartCount").textContent = count;
+    
+    const pending = !!getPendingOrder();
+    document.querySelectorAll(".buy-btn").forEach(button => {
+        if (button.textContent.trim() === "Coming Soon") return;
+        button.disabled = pending;
+        button.textContent = pending ? "Order Pending" : "Add to Cart";
+    });
 
     const cartItems = document.getElementById("cartItems");
-
     if (cart.length === 0) {
-        cartItems.innerHTML =
-            `<div class="cart-empty">Your cart is empty.</div>`;
+        cartItems.innerHTML = `<div class="cart-empty">Your cart is empty.</div>`;
     } else {
         cartItems.innerHTML = cart.map(item => {
             const base = item.basePrice * item.quantity;
@@ -965,18 +1096,13 @@ function updateCart() {
                 <div class="cart-item">
                     <div>
                         <div class="cart-item-name">${item.name}</div>
-
                         <div class="cart-item-price">
                             Price: ${money(base)}<br>
                             Tax: ${money(tax)}<br>
                             Final Price: ${money(final)}
                         </div>
-
-                        <button class="remove-btn" onclick="removeFromCart(${item.id})">
-                            Remove
-                        </button>
+                        <button class="remove-btn" onclick="removeFromCart(${item.id})">Remove</button>
                     </div>
-
                     <div class="quantity-controls">
                         <button onclick="changeQuantity(${item.id},-1)">−</button>
                         <span>${item.quantity}</span>
@@ -993,29 +1119,15 @@ function updateCart() {
 
 function updateCartTotals() {
     const totals = getCartTotals();
-
-    document.getElementById("cartSubtotal").textContent =
-        money(totals.subtotal);
-
-    document.getElementById("cartTax").textContent =
-        money(totals.tax);
-
-    document.getElementById("cartDiscount").textContent =
-        "-" + money(totals.discount);
-
-    document.getElementById("cartTotal").textContent =
-        money(totals.total);
-
-    document.getElementById("discountRow").style.display =
-        appliedCoupon && totals.discount > 0 ? "flex" : "none";
+    document.getElementById("cartSubtotal").textContent = money(totals.subtotal);
+    document.getElementById("cartTax").textContent = money(totals.tax);
+    document.getElementById("cartDiscount").textContent = "-" + money(totals.discount);
+    document.getElementById("cartTotal").textContent = money(totals.total);
+    document.getElementById("discountRow").style.display = (appliedCoupon && totals.discount > 0) ? "flex" : "none";
 }
 
-
-/* SHOW GAME FIELDS WHEN NEEDED */
 function updateGameFields() {
-    const hasCategory = category =>
-        cart.some(item => item.category === category);
-
+    const hasCategory = cat => cart.some(item => item.category === cat);
     const fields = [
         ["freeFireField","freeFireUID",hasCategory("freefire")],
         ["robloxField","robloxUsername",hasCategory("roblox")],
@@ -1023,100 +1135,69 @@ function updateGameFields() {
     ];
 
     fields.forEach(([fieldId,inputId,visible]) => {
-        document.getElementById(fieldId).style.display =
-            visible ? "block" : "none";
-
+        document.getElementById(fieldId).style.display = visible ? "block" : "none";
         document.getElementById(inputId).required = visible;
-
-        if (!visible) {
-            document.getElementById(inputId).value = "";
-        }
+        if (!visible) document.getElementById(inputId).value = "";
     });
 }
 
-
-/* COUPON */
 function applyCoupon() {
-    const code = document.getElementById("couponInput")
-        .value.trim().toUpperCase();
-
+    const code = document.getElementById("couponInput").value.trim().toUpperCase();
     const message = document.getElementById("couponMessage");
 
-    if (
-        Object.prototype.hasOwnProperty.call(PROMO_CODES,code) &&
-        code
-    ) {
-        appliedCoupon = {
-            code:code,
-            discount:PROMO_CODES[code]
-        };
-
+    if (Object.prototype.hasOwnProperty.call(PROMO_CODES, code) && code) {
+        appliedCoupon = { code: code, discount: PROMO_CODES[code] };
         message.textContent = "Coupon applied successfully!";
         message.className = "coupon-message success";
     } else {
         appliedCoupon = null;
-
         message.textContent = "Invalid coupon code.";
         message.className = "coupon-message error";
     }
-
     updateCartTotals();
 }
 
-
-/* ORDER DETAILS */
+/* CHECKOUT */
 function buildOrderMessage() {
     const name = document.getElementById("customerName").value.trim();
     const email = document.getElementById("customerEmail").value.trim();
     const username = document.getElementById("customerUsername").value.trim();
-
     const totals = getCartTotals();
 
     let message = "SHARDEX STORE - ORDER DETAILS\n\n";
-
-    message += `Name: ${name}\n`;
-    message += `Email: ${email}\n`;
-    message += `Username: ${username}\n`;
+    message += `Name: ${name}\nEmail: ${email}\nUsername: ${username}\n`;
 
     if (cart.some(item => item.category === "minecraft")) {
         message += `Gamertag: ${document.getElementById("minecraftGamertag").value.trim()}\n`;
     }
-
     if (cart.some(item => item.category === "freefire")) {
         message += `UID: ${document.getElementById("freeFireUID").value.trim()}\n`;
     }
-
     if (cart.some(item => item.category === "roblox")) {
         message += `Roblox Username: ${document.getElementById("robloxUsername").value.trim()}\n`;
     }
 
     message += "\nOrder:\n";
-
     cart.forEach(item => {
         const base = item.basePrice * item.quantity;
         const tax = item.tax * item.quantity;
         const final = item.price * item.quantity;
-
-        message += `${item.name} × ${item.quantity}\n`;
-        message += `Price: ${money(base)} | Tax: ${money(tax)} | Final: ${money(final)}\n`;
+        message += `${item.name} × ${item.quantity}\nPrice: ${money(base)} | Tax: ${money(tax)} | Final: ${money(final)}\n`;
     });
 
-    message += `\nSubtotal: ${money(totals.subtotal)}\n`;
-    message += `Tax: ${money(totals.tax)}\n`;
-
+    message += `\nSubtotal: ${money(totals.subtotal)}\nTax: ${money(totals.tax)}\n`;
     if (appliedCoupon && totals.discount > 0) {
-        message += `Coupon: ${appliedCoupon.code} (${appliedCoupon.discount}% off)\n`;
-        message += `Discount: -${money(totals.discount)}\n`;
+        message += `Coupon: ${appliedCoupon.code} (${appliedCoupon.discount}% off)\nDiscount: -${money(totals.discount)}\n`;
     }
-
     message += `\nFINAL TOTAL: ${money(totals.total)}`;
-
     return message;
 }
 
-
-/* CHECKOUT */
 function checkout() {
+    if (getPendingOrder()) {
+        alert("1 Order Already Placed. Please receive your pending order first.");
+        return;
+    }
     if (cart.length === 0) {
         alert("Your cart is empty!");
         return;
@@ -1126,113 +1207,161 @@ function checkout() {
     const emailInput = document.getElementById("customerEmail");
     const usernameInput = document.getElementById("customerUsername");
 
-    if (!nameInput.value.trim()) {
-        alert("Please enter your name.");
-        nameInput.focus();
+    if (!nameInput.value.trim() || !emailInput.value.trim() || !usernameInput.value.trim()) {
+        alert("Please fill all required personal details.");
         return;
-    }
-
-    if (!emailInput.value.trim() || !emailInput.checkValidity()) {
-        alert("Please enter a valid email address.");
-        emailInput.focus();
-        return;
-    }
-
-    if (!usernameInput.value.trim()) {
-        alert("Please enter your username.");
-        usernameInput.focus();
-        return;
-    }
-
-    const fields = [
-        ["freefire","freeFireUID","Please enter your Free Fire UID."],
-        ["roblox","robloxUsername","Please enter your Roblox username."],
-        ["minecraft","minecraftGamertag","Please enter your Minecraft Gamertag."]
-    ];
-
-    for (const [category,inputId,errorMessage] of fields) {
-        if (cart.some(item => item.category === category)) {
-            const input = document.getElementById(inputId);
-
-            if (!input.value.trim()) {
-                alert(errorMessage);
-                input.focus();
-                return;
-            }
-        }
     }
 
     orderMessagePending = buildOrderMessage();
+    orderDraft = {
+        id: "SDX-" + Date.now().toString(36).toUpperCase(),
+        date: new Date().toLocaleString(),
+        details: orderMessagePending,
+        items: cart.map(item => ({ name:item.name, quantity:item.quantity, price:item.price })),
+        total: getCartTotals().total,
+        status: "Pending",
+        rating: null,
+        review: ""
+    };
 
-    document.getElementById("orderPreview").textContent =
-        orderMessagePending;
-
+    document.getElementById("placeOrderButton").style.display = "none";
+    document.getElementById("copyDetailsButton").disabled = false;
+    document.getElementById("copyDetailsButton").textContent = "Copy Details & Continue";
+    document.getElementById("orderPreview").textContent = orderMessagePending;
     document.getElementById("orderModal").classList.add("show");
 }
 
-
-/* COPY DETAILS THEN OPEN WHATSAPP */
 function closeOrderModal() {
     document.getElementById("orderModal").classList.remove("show");
 }
 
 async function copyAndContinue() {
-    let copied = false;
-
+    if (!orderDraft) return;
     try {
         await navigator.clipboard.writeText(orderMessagePending);
-        copied = true;
-    } catch (error) {
+    } catch (e) {
         const temp = document.createElement("textarea");
-
         temp.value = orderMessagePending;
-        temp.style.position = "fixed";
-        temp.style.opacity = "0";
-
         document.body.appendChild(temp);
         temp.select();
-
-        copied = document.execCommand("copy");
+        document.execCommand("copy");
         temp.remove();
     }
 
-    if (!copied) {
-        alert("Copy failed. Please manually copy the order details.");
-        return;
+    document.getElementById("placeOrderButton").style.display = "block";
+    document.getElementById("copyDetailsButton").disabled = true;
+    document.getElementById("copyDetailsButton").textContent = "Details Copied!";
+
+    if (WHATSAPP_NUMBER && /^\d{10,15}$/.test(WHATSAPP_NUMBER)) {
+        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(orderMessagePending)}`, "_blank");
     }
+}
 
-    if (!WHATSAPP_NUMBER || !/^\d{10,15}$/.test(WHATSAPP_NUMBER)) {
-        alert("Order details copied! Set your WhatsApp number in the HTML.");
-        closeOrderModal();
-        return;
-    }
-
-    const url =
-        `https://wa.me/${923343498141}?text=${encodeURIComponent(orderMessagePending)}`;
-
-    window.open(url,"_blank");
+function placeOrder() {
+    if (!orderDraft || getPendingOrder()) return;
+    orders.unshift(orderDraft);
+    saveOrders();
+    cart = [];
+    appliedCoupon = null;
+    orderDraft = null;
     closeOrderModal();
+    closeCart();
+    updateCart();
+    alert("Order placed successfully! Check your orders list.");
 }
 
-
-/* MODAL CONTROLS */
-function openCart() {
-    document.getElementById("cartOverlay").classList.add("show");
+/* ORDERS HISTORY & REVIEW ANIMATION */
+function openOrders() {
+    renderOrders();
+    document.getElementById("ordersModal").classList.add("show");
 }
 
-function closeCart() {
-    document.getElementById("cartOverlay").classList.remove("show");
+function closeOrders() {
+    document.getElementById("ordersModal").classList.remove("show");
 }
 
-function overlayClick(event) {
-    if (event.target.id === "cartOverlay") {
-        closeCart();
+function ordersOverlayClick(e) {
+    if (e.target.id === "ordersModal") closeOrders();
+}
+
+function renderOrders() {
+    const container = document.getElementById("ordersList");
+    if (!orders.length) {
+        container.innerHTML = '<div class="cart-empty">You have no orders yet.</div>';
+        return;
     }
+    container.innerHTML = orders.map((order, index) => `
+        <article class="order-card">
+            <h3>${order.id} — ${order.total.toLocaleString()} PKR</h3>
+            <p>${order.date}\n${order.details}</p>
+            <span class="order-status ${order.status === "Received" ? "received" : ""}">${order.status}</span>
+            
+            ${order.status === "Pending" ? `
+                <button class="received-btn" onclick="showReviewForm(${index})">Order Received</button>
+                <div class="review-form" id="reviewForm-${index}">
+                    <form onsubmit="submitOrderReview(event,${index})">
+                        <label>Rating (1–5 stars) *</label>
+                        <div class="star-rating">
+                            ${[5,4,3,2,1].map(star => `<input type="radio" id="rating-${index}-${star}" name="rating-${index}" value="${star}" required><label for="rating-${index}-${star}">★</label>`).join("")}
+                        </div>
+                        <label for="review-${index}">Feedback *</label>
+                        <textarea id="review-${index}" required minlength="3" placeholder="Write feedback..."></textarea>
+                        <button class="review-submit" type="submit">Submit Feedback</button>
+                    </form>
+                </div>
+            ` : `
+                <div class="review-text">
+                    <strong>Rating:</strong> ${'★'.repeat(order.rating)} (${order.rating}/5)<br>
+                    <strong>Review:</strong> ${escapeHtml(order.review || "")}
+                </div>
+            `}
+        </article>
+    `).join("");
 }
 
+function showReviewForm(index) {
+    const form = document.getElementById(`reviewForm-${index}`);
+    if (form) form.classList.toggle("show");
+}
 
-/* START */
-renderProducts();
+function submitOrderReview(event, index) {
+    event.preventDefault();
+    const order = orders[index];
+    if (!order || order.status !== "Pending") return;
+
+    const chosen = document.querySelector(`input[name="rating-${index}"]:checked`);
+    const feedback = document.getElementById(`review-${index}`).value.trim();
+
+    if (!chosen || feedback.length < 3) return;
+
+    order.rating = Number(chosen.value);
+    order.review = feedback;
+    order.status = "Received";
+    order.receivedAt = new Date().toLocaleString();
+    saveOrders();
+
+    // Trigger Success Animation Modal
+    const successModal = document.getElementById("successModal");
+    successModal.classList.add("show");
+
+    setTimeout(() => {
+        successModal.classList.remove("show");
+        renderOrders();
+        updateCart();
+        if (currentCategory) renderProducts(currentCategory);
+    }, 1800);
+}
+
+function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, m => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[m]));
+}
+
+function openCart() { document.getElementById("cartOverlay").classList.add("show"); }
+function closeCart() { document.getElementById("cartOverlay").classList.remove("show"); }
+function overlayClick(e) { if (e.target.id === "cartOverlay") closeCart(); }
+
+/* INITIALIZE */
+updateUserDisplay();
 updateCart();
 </script>
 
